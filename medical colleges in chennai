@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<head>
+<h1>top 5 medical college
+</h1><style>
+        body {
+            background-color: #fff8dc;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ffcc00;
+            color: darkred;
+            text-align: center;
+            padding: 20px;
+        }
+
+        nav {
+            background-color: #333;
+            text-align: center;
+            padding: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 15px;
+            font-size: 18px;
+        }
+
+        nav a:hover {
+            color: yellow;
+            text-decoration: underline;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #b22222;
+            margin-top: 30px;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+
+        .college-box {
+            background-color: #fafad2;
+            border: 2px solid #888;
+            border-radius: 10px;
+            width: 80%;
+            margin: 20px auto;
+            padding: 15px;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .college-box img {
+            width: 100%;
+            max-height: 350px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 3px solid #d2691e;
+        }
+
+        .college-box pre {
+            white-space: pre-wrap;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+</head>
+<body>
+<div class="college-box">
+    
+<h3>1. Madras Medical College (MMC)</h3>
+ <pre> Madras Medical College (MMC), established in 1835, is one of the oldest and most reputed medical colleges
+in India. It is a government-run institution affiliated with The Tamil Nadu Dr. M.G.R. Medical University. 
+MMC is known for its high-quality education, experienced faculty, and excellent clinical exposure through the Rajiv Gandhi Government General Hospital.
+
+Cutoff required (approx):
+NEET UG: 660–700 marks for MBBS under General Category
+
+Address:
+Madras Medical College,
+E.V.R. Salai, Park Town,
+Chennai – 600003, Tamil Nadu.
+
+Fees:
+Government quota: ₹13,610 per year
+Management quota: As per TN government norms.
+
+Courses offered:
+MBBS, MD, MS, DM, MCh, and various diploma courses.
+
+Key Features:
+• One of India’s oldest medical institutions.
+• Excellent hospital facilities and patient exposure.
+• Highly reputed for postgraduate and specialty training.
+</pre>
+</div>
+<div class="college-box">
+
+<h3>2. Stanley Medical College (SMC)</h3> <pre> Stanley Medical College (SMC), established in 1938, is a government medical institution
+ affiliated with The Tamil Nadu Dr. M.G.R. Medical University. The associated Government Stanley Hospital is one of the largest multi-specialty 
+ hospitals in South India, offering students vast clinical experience.
+
+Cutoff required (approx):
+NEET UG: 640–690 marks for MBBS under General Category
+
+Address:
+Stanley Medical College, Old Jail Road,
+Royapuram, Chennai – 600001.
+
+Fees:
+Approx. ₹13,000 per year under government quota.
+
+Courses offered:
+MBBS, MD, MS, DM, MCh, and PG Diploma programs.
+
+Key Features:
+• Famous for its Department of Plastic Surgery and Gastroenterology.
+• Excellent clinical exposure and infrastructure.
+• Renowned for research and patient care.
+</pre></div>
+
+<div class="college-box">
+<h3>3. SRM Medical College Hospital and Research Centre</h3> <pre> SRM Medical College Hospital and Research Centre is part of SRM Institute of Science and 
+Technology, a deemed-to-be university. Established in 2005, it offers world-class infrastructure, advanced medical equipment, and excellent academic facilities.
+
+Cutoff required (approx):
+NEET UG: 400–500 marks (varies by category and quota)
+
+Address:
+SRM Nagar, Potheri, Kattankulathur,
+Chengalpattu District, Chennai – 603203.
+
+Fees:
+Approx. ₹22,50,000 per year for MBBS.
+
+Courses offered:
+MBBS, MD, MS, DM, MCh, and Ph.D. programs.
+
+Key Features:
+• Modern infrastructure and hospital with 1500+ beds.
+• Excellent placement and internship support.
+• Research-oriented programs with global collaborations.
+</pre></div>
+<div class="college-box">
+<h3>4. Saveetha Medical College and Hospital</h3> <pre> Saveetha Medical College and Hospital,
+ established in 2008, is part of Saveetha Institute of Medical and Technical Sciences (Deemed University).
+  It is known for its advanced facilities and strong focus on research, innovation, and clinical training.
+
+Cutoff required (approx):
+NEET UG: 400–550 marks depending on category.
+
+Address:
+Saveetha Nagar, Thandalam,
+Chennai – 602105, Tamil Nadu.
+
+Fees:
+₹25,00,000 per year (approx.) for MBBS.
+
+Courses offered:
+MBBS, MD, MS, DM, MCh, and B.Sc. Nursing.
+
+Key Features:
+• Modern hospital with over 1200 beds.
+• Strong emphasis on research and global exposure.
+• Recognized by NMC and listed in WHO directories.
+</pre></div>
+<div class="college-box">
+<h3>5. Sri Ramachandra Institute of Higher Education and Research (SRIHER)</h3>  <pre> Sri Ramachandra Institute of Higher Education and Research (SRIHER),
+ formerly known as Sri Ramachandra Medical College and Research Institute, is a leading private medical university in Chennai. It was established in 1985 and is
+  recognized by the National Medical Commission (NMC).
+
+Cutoff required (approx):
+NEET UG: 480–550 marks for MBBS
+
+Address:
+No.1, Ramachandra Nagar, Porur,
+Chennai – 600116, Tamil Nadu.
+
+Fees:
+₹25,00,000 – ₹27,00,000 per year for MBBS.
+
+Courses offered:
+MBBS, BDS, MD, MS, DM, MCh, M.Sc., B.Sc. Nursing, and other allied health programs.
+
+Key Features:
+• Deemed university with modern hospital facilities.
+• International partnerships and research opportunities.
+• Excellent placement and internship programs.
+</pre></div>
+</body>
