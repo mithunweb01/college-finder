@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://mithunweb01.github.io/campus-finder-hub/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Chennai -->
+  <url>
+    <loc>https://mithunweb01.github.io/campus-finder-hub/chennai-engineering.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mithunweb01.github.io/campus-finder-hub/chennai-medical.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mithunweb01.github.io/campus-finder-hub/chennai-medical-alt.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mithunweb01.github.io/campus-finder-hub/chennai-arts.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Pondicherry -->
+  <url>
+    <loc>https://mithunweb01.github.io/campus-finder-hub/pondicherry-engineering.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mithunweb01.github.io/campus-finder-hub/pondicherry-medical.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mithunweb01.github.io/campus-finder-hub/pondicherry-arts.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Coimbatore -->
+  <url>
+    <loc>https://mithunweb01.github.io/campus-finder-hub/coimbatore-engineering.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mithunweb01.github.io/campus-finder-hub/coimbatore-medical.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mithunweb01.github.io/campus-finder-hub/coimbatore-arts.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>
+
