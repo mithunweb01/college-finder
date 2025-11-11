@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: #fff8dc;
+      font-family: Arial, Helvetica, sans‑serif;
+      margin: 0; padding: 0;
+    }
+    header {
+      background-color: #ffcc00;
+      color: darkred;
+      text-align: center;
+      padding: 20px;
+    }
+    .section-title {
+      text-align: center;
+      color: #b22222;
+      margin-top: 30px;
+      font-size: 28px;
+      text-transform: uppercase;
+    }
+    .college-box {
+      background-color: #fafad2;
+      border: 2px solid #888;
+      border-radius: 10px;
+      width: 80%;
+      margin: 20px auto;
+      padding: 15px;
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+    }
+    .college-box h3 {
+      margin-top: 0;
+    }
+    .college-box pre {
+      white‑space: pre-wrap;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <header><h1>Top 5 Medical Colleges in Trichy</h1></header>
+
+  <div class="college-box">
+    <h3>1. K.A.P. Viswanatham Government Medical College, Trichy</h3>
+    <pre>
+Description:
+Established in 1997, this government medical college in Trichy is affiliated to state medical body, offers MBBS and postgraduate courses with strong clinical exposure.
+
+Address:
+Periyamilaguparai, Collector Office Road, Trichy – 620001, Tamil Nadu, India
+
+Fees:
+State quota MBBS fees (check for current year)  
+Phone:
++91‑431‑2401011 :contentReference[oaicite:0]{index=0}  
+Official Website:
+https://www.kapvgmctry.ac.in :contentReference[oaicite:1]{index=1}
+
+Courses:
+MBBS (150 seats), PG in several specialties, Diploma/Certificate courses :contentReference[oaicite:2]{index=2}
+
+Cutoff:
+NEET UG closing scores vary by year and category — check latest counselling lists.
+    </pre>
+  </div>
+
+  <div class="college-box">
+    <h3>2. SRM Medical & Research Centre, Trichy</h3>
+    <pre>
+Description:
+A private medical college near Trichy‑Chennai highway, offering MBBS and healthcare‑research facilities.
+
+Address:
+Irungalur Village, Manachanallur Taluk, Tiruchirappalli – 621105, Tamil Nadu, India :contentReference[oaicite:3]{index=3}
+
+Fees:
+(approx) check current year for MBBS fee details. :contentReference[oaicite:4]{index=4}  
+Phone:
++91‑431‑2258737 :contentReference[oaicite:5]{index=5}  
+Official Website:
+https://mchrc.srmtrichy.edu.in :contentReference[oaicite:6]{index=6}
+
+Courses:
+MBBS, MS/MD, allied health sciences & research.
+
+Cutoff:
+Check latest NEET UG / PG counselling lists for accurate numbers.
+    </pre>
+  </div>
+
+  <div class="college-box">
+    <h3>3. [College #3 Name]</h3>
+    <pre>
+Description:
+[Add description]  
+Address:
+[Add address]  
+Fees:
+[Add fees]  
+Phone:
+[Add phone]  
+Official Website:
+[Add website]  
+Courses:
+[Add major courses]  
+Cutoff:
+[Add recent cutoff estimate]  
+    </pre>
+  </div>
+
+  <!-- Add college‑boxes #4 and #5 here following the same pattern -->
+
+</body>
+</html>
