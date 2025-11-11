@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: #fff8dc;
+      font-family: Arial, Helvetica, sans‑serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #ffcc00;
+      color: darkred;
+      text-align: center;
+      padding: 20px;
+    }
+    .section-title {
+      text-align: center;
+      color: #b22222;
+      margin-top: 30px;
+      font-size: 28px;
+      text-transform: uppercase;
+    }
+    .college-box {
+      background-color: #fafad2;
+      border: 2px solid #888;
+      border-radius: 10px;
+      width: 80%;
+      margin: 20px auto;
+      padding: 15px;
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+    }
+    .college-box h3 {
+      margin-top: 0;
+    }
+    .college-box pre {
+      white-space: pre-wrap;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <header><h1>Top 5 Aviation Colleges in Trichy</h1></header>
+
+  <div class="college-box">
+    <h3>1. Hindustan Institute of Aviation & Hotel Management</h3>
+    <pre>
+Description:
+A specialised institute offering aviation & hotel management training in Trichy, catering to aircraft maintenance, cabin crew, ground staff roles.
+
+Address:
+1/306, Vayalur Main Road, Somarasen Pettai, Trichy 620102, Tamil Nadu, India. :contentReference[oaicite:0]{index=0}
+
+Fees:
+(Please fill current fees)  
+Phone:
+9894895546 :contentReference[oaicite:1]{index=1}  
+Official Website:
+https://hindustanairhostess.com/ :contentReference[oaicite:2]{index=2}  
+
+Courses:
+Diplomas / certificates in Aviation, Cabin Crew, Aircraft Maintenance, Ground Staff.
+
+Cutoff:
+(Not typically exam‑based like engineering; check minimum
