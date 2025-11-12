@@ -1,9 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
- <link rel="canonical" href="https://mithunweb01.github.io/your-page-name" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>College Finder</title>
+<link rel="canonical" href="https://mithunweb01.github.io/your-page-name" />
+<meta name="description" content="Find top engineering, medical, arts, and science colleges in Chennai, Coimbatore, Pondicherry, Trichy, and Madurai.">
+<meta name="keywords" content="Colleges in Chennai, Coimbatore, Pondicherry, Trichy, Madurai, Engineering Colleges, Medical Colleges, Arts and Science Colleges, Aviation Colleges, Tamil Nadu Colleges">
+<meta name="author" content="Mithun">
 
- <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3W6CSF55J1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -12,55 +18,96 @@
   gtag('config', 'G-3W6CSF55J1');
 </script>
 
-<meta name="google-site-verification" content="733sERG2XKU1-F7i2VZrRYvZ6ZwvAX8J6m7Hex4Mmpo" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Find top engineering, medical, arts, and science colleges in Chennai, Coimbatore, Pondicherry, Trichy, and Madurai.">
-<meta name="keywords" content="Colleges in Chennai, Coimbatore, Pondicherry, Trichy, Madurai, Engineering Colleges, Medical Colleges, Arts and Science Colleges, Aviation Colleges, Tamil Nadu Colleges">
-<meta name="author" content="Mithun">
-
-<title>College Finder</title>
-
 <style>
     body {
-        color: red;
-        background-color: aliceblue;
-        font-family: Arial, sans-serif;
-        font-size: 18px;
         margin: 0;
-        padding: 0 20px;
+        font-family: Arial, sans-serif;
+        background-color: aliceblue;
+        color: #333;
+    }
+
+    /* Layout */
+    .container {
+        display: flex;
+        height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        width: 230px;
+        background-color: #003366;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding-top: 20px;
+    }
+    .sidebar h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 22px;
+        color: #ffcc00;
+    }
+    .tab-button {
+        padding: 15px 20px;
+        text-align: left;
+        border: none;
+        background: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        border-left: 4px solid transparent;
+        transition: 0.3s;
+    }
+    .tab-button:hover, .tab-button.active {
+        background-color: #0055aa;
+        border-left: 4px solid #ffcc00;
+    }
+
+    /* Content Area */
+    .content {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
     }
     h1 {
         text-align: center;
-        font-size: 40px;
-        margin-top: 20px;
+        color: darkred;
+        font-size: 36px;
+    }
+    h2 {
+        color: darkred;
+        text-align: center;
     }
     p {
         text-align: center;
         font-size: 18px;
     }
+
     ul {
-        font-size: 18px;
-        line-height: 2;
-        list-style-type: none;
+        list-style: none;
         padding: 0;
         max-width: 700px;
-        margin: 20px auto;
+        margin: 0 auto;
+        font-size: 18px;
+        line-height: 1.8;
     }
     ul li a {
-        text-decoration: none;
         color: blue;
+        text-decoration: none;
     }
     ul li a:hover {
         text-decoration: underline;
     }
 
-    /* --- Flip Board Section --- */
+    /* Flip Board Section */
     #flip-board {
         text-align: center;
         background: #f5f7fb;
-        padding: 50px 20px;
+        padding: 40px 20px;
         border-radius: 10px;
-        margin-top: 40px;
+        margin-top: 30px;
     }
     .flip-board {
         display: flex;
@@ -118,92 +165,139 @@
         font-weight: bold;
         margin-top: 8px;
     }
-    @media (max-width: 600px) {
-        .flip-card {
-            width: 90%;
+
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+        }
+        .sidebar {
+            flex-direction: row;
+            overflow-x: auto;
+            width: 100%;
+            height: auto;
+        }
+        .tab-button {
+            flex: 1;
+            text-align: center;
+            border-left: none;
+            border-bottom: 4px solid transparent;
+        }
+        .tab-button.active {
+            border-bottom: 4px solid #ffcc00;
         }
     }
 </style>
 </head>
 
 <body>
+<div class="container">
+    <!-- Sidebar Tabs -->
+    <div class="sidebar">
+        <h2>College Finder</h2>
+        <button class="tab-button active" onclick="showTab('home')">🏠 Home</button>
+        <button class="tab-button" onclick="showTab('chennai')">Chennai</button>
+        <button class="tab-button" onclick="showTab('pondy')">Pondicherry</button>
+        <button class="tab-button" onclick="showTab('coimbatore')">Coimbatore</button>
+        <button class="tab-button" onclick="showTab('trichy')">Trichy</button>
+        <button class="tab-button" onclick="showTab('madurai')">Madurai</button>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content">
+        <!-- Home Tab -->
+        <div id="home" class="tab-content" style="display:block;">
+            <h1>Welcome to College Finder</h1>
+            <p>This site shows top colleges in popular cities in Tamil Nadu. <br>
+            Click a link below or use the sidebar to explore.</p>
+
+            <!-- Flip Board Section -->
+            <section id="flip-board">
+              <h2>Explore All Colleges Quickly</h2>
+              <div class="flip-board">
+
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Chennai – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering_colleges_in_chennai.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Chennai – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical_college_in_chennai.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Chennai – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts-science_college_chennai.html">View</a></div></div></div>
+
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Pondicherry – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering_pondy.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Pondicherry – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical_pondyy.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Pondicherry – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts_pondy.html">View</a></div></div></div>
+
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Coimbatore – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering_coimbatore.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Coimbatore – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical_college_coimbatore.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Coimbatore – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts_science_coimbatore.html">View</a></div></div></div>
+
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering-trichy.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical-trichy.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts-and-science-trichy.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Aviation</div><div class="flip-card-back"><h3>Top 5 Aviation Colleges</h3><a href="aviation-trichy.html">View</a></div></div></div>
+
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Madurai – Aviation</div><div class="flip-card-back"><h3>Top 5 Aviation Colleges</h3><a href="aviaaon-maduur.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Madurai – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engeerg-ma.html">View</a></div></div></div>
+
+              </div>
+            </section>
+        </div>
+
+        <!-- Chennai Tab -->
+        <div id="chennai" class="tab-content" style="display:none;">
+            <h2>Chennai</h2>
+            <ul>
+                <li><a href="engineering_colleges_in_chennai.html">Top 5 Engineering Colleges</a></li>
+                <li><a href="medical_college_in_chennai.html">Top 5 Medical Colleges</a></li>
+                <li><a href="arts-science_college_chennai.html">Top 5 Arts & Science Colleges</a></li>
+            </ul>
+        </div>
+
+        <!-- Pondicherry Tab -->
+        <div id="pondy" class="tab-content" style="display:none;">
+            <h2>Pondicherry</h2>
+            <ul>
+                <li><a href="engineering_pondy.html">Top 5 Engineering Colleges</a></li>
+                <li><a href="medical_pondyy.html">Top 5 Medical Colleges</a></li>
+                <li><a href="arts_pondy.html">Top 5 Arts & Science Colleges</a></li>
+            </ul>
+        </div>
+
+        <!-- Coimbatore Tab -->
+        <div id="coimbatore" class="tab-content" style="display:none;">
+            <h2>Coimbatore</h2>
+            <ul>
+                <li><a href="engineering_coimbatore.html">Top 5 Engineering Colleges</a></li>
+                <li><a href="medical_college_coimbatore.html">Top 5 Medical Colleges</a></li>
+                <li><a href="arts_science_coimbatore.html">Top 5 Arts & Science Colleges</a></li>
+            </ul>
+        </div>
+
+        <!-- Trichy Tab -->
+        <div id="trichy" class="tab-content" style="display:none;">
+            <h2>Trichy</h2>
+            <ul>
+                <li><a href="engineering-trichy.html">Top 5 Engineering Colleges</a></li>
+                <li><a href="medical-trichy.html">Top 5 Medical Colleges</a></li>
+                <li><a href="arts-and-science-trichy.html">Top 5 Arts & Science Colleges</a></li>
+                <li><a href="aviation-trichy.html">Top 5 Aviation Colleges</a></li>
+            </ul>
+        </div>
+
+        <!-- Madurai Tab -->
+        <div id="madurai" class="tab-content" style="display:none;">
+            <h2>Madurai</h2>
+            <ul>
+                <li><a href="aviaaon-maduur.html">Top 5 Aviation Colleges</a></li>
+                <li><a href="engeerg-ma.html">Top 5 Engineering Colleges</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <script>
-    alert("Click a link to redirect to your college list!");
+function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(tabId).style.display = 'block';
+    event.currentTarget.classList.add('active');
+}
 </script>
-
-<h1>Welcome to College Finder</h1>
-<p>
-    This site shows top colleges in popular cities in Tamil Nadu. <br>
-    Click a link below to see your preferred colleges:
-</p>
-
-<h2 style="text-align:center; color: darkred;">Chennai</h2>
-<ul>
-    <li><a href="engineering_colleges_in_chennai.html">Top 5 Engineering Colleges in Chennai</a></li>
-    <li><a href="medical_college_in_chennai.html">Top 5 Medical Colleges in Chennai</a></li>
-    <li><a href="arts-science_college_chennai.html">Top 5 Arts and Science Colleges in Chennai</a></li>
-</ul>
-
-<h2 style="text-align:center; color: darkred;">Pondicherry</h2>
-<ul>
-    <li><a href="engineering_pondy.html">Top 5 Engineering Colleges in Pondicherry</a></li>
-    <li><a href="medical_pondyy.html">Top 5 Medical Colleges in Pondicherry</a></li>
-    <li><a href="arts_pondy.html">Top 5 Arts and Science Colleges in Pondicherry</a></li>
-</ul>
-
-<h2 style="text-align:center; color: darkred;">Coimbatore</h2>
-<ul>
-    <li><a href="engineering_coimbatore.html">Top 5 Engineering Colleges in Coimbatore</a></li>
-    <li><a href="medical_college_coimbatore.html">Top 5 Medical Colleges in Coimbatore</a></li>
-    <li><a href="arts_science_coimbatore.html">Top 5 Arts and Science Colleges in Coimbatore</a></li>
-</ul>
-
-<h2 style="text-align:center; color: darkred;">Trichy</h2>
-<ul>
-    <li><a href="engineering-trichy.html">Top 5 Engineering Colleges in Trichy</a></li>
-    <li><a href="medical-trichy.html">Top 5 Medical Colleges in Trichy</a></li>
-    <li><a href="arts-and-science-trichy.html">Top 5 Arts and Science Colleges in Trichy</a></li>
-    <li><a href="aviation-trichy.html">Top 5 Aviation Colleges in Trichy</a></li>
-</ul>
-
-<h2 style="text-align:center; color: darkred;">Madurai</h2>
-<ul>
-    <li><a href="aviaaon-maduur.html">Top 5 Aviation Colleges in Madurai</a></li>
-    <li><a href="engeerg-ma.html">Top 5 Engineering Colleges in Madurai</a></li>
-</ul>
-
-<!-- 🌟 Full Flip Board Section -->
-<section id="flip-board">
-  <h2 style="color:#003366;">Explore All Colleges Quickly</h2>
-  <div class="flip-board">
-
-    <!-- Chennai -->
-    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Chennai – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering_colleges_in_chennai.html">View</a></div></div></div>
-    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Chennai – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical_college_in_chennai.html">View</a></div></div></div>
-    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Chennai – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts-science_college_chennai.html">View</a></div></div></div>
-
-    <!-- Pondicherry -->
-    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Pondicherry – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering_pondy.html">View</a></div></div></div>
-    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Pondicherry – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical_pondyy.html">View</a></div></div></div>
-    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Pondicherry – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts_pondy.html">View</a></div></div></div>
-
-    <!-- Coimbatore -->
-    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Coimbatore – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering_coimbatore.html">View</a></div></div></div>
-    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Coimbatore – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical_college_coimbatore.html">View</a></div></div></div>
-    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Coimbatore – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts_science_coimbatore.html">View</a></div></div></div>
-
-    <!-- Trichy -->
-    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering-trichy.html">View</a></div></div></div>
-    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical-trichy.html">View</a></div></div></div>
-    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts-and-science-trichy.html">View</a></div></div></div>
-    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Aviation</div><div class="flip-card-back"><h3>Top 5 Aviation Colleges</h3><a href="aviation-trichy.html">View</a></div></div></div>
-
-    <!-- Madurai -->
-    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Madurai – Aviation</div><div class="flip-card-back"><h3>Top 5 Aviation Colleges</h3><a href="aviaaon-maduur.html">View</a></div></div></div>
-    <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Madurai – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engeerg-ma.html">View</a></div></div></div>
-
-  </div>
-</section>
-
 </body>
 </html>
