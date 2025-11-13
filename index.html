@@ -206,13 +206,18 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js"></script>
 
 <script>
-/* -------------------------
-  Firebase config (you provided)
--------------------------- */
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDjW_3cYR8apPFMmZqLqZh_9i2bN-1IEmY",
   authDomain: "college-finder-279aa.firebaseapp.com",
-  databaseURL: "https://college-finder-279aa-default-rtdb.firebaseio.com",
+  databaseURL: "https://college-finder-279aa-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "college-finder-279aa",
   storageBucket: "college-finder-279aa.firebasestorage.app",
   messagingSenderId: "94401695690",
@@ -220,65 +225,9 @@ const firebaseConfig = {
   measurementId: "G-NYKK0LYV1S"
 };
 
-/* Initialize Firebase */
-const app = firebase.initializeApp(firebaseConfig);
-try { firebase.analytics(); } catch(e){ /* analytics optional */ }
-const db = firebase.database();
-const messagesRef = db.ref('messages');
-
-/* Tab switching (fixed) */
-function showTab(tabId, el){
-  document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
-  document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-  const target = document.getElementById(tabId);
-  if(target) target.style.display = 'block';
-  if(el) el.classList.add('active');
-  // if messages tab opened, ensure messages are refreshed
-  if(tabId === 'messagesTab') displayMessages();
-}
-
-/* Display messages in all .messages-display containers */
-function displayMessages(){
-  // listen for live updates
-  messagesRef.off(); // remove old listeners to avoid duplicates
-  messagesRef.on('value', snap => {
-    const containers = document.querySelectorAll('.messages-display');
-    containers.forEach(c => c.innerHTML = '');
-    snap.forEach(child => {
-      const msg = child.val();
-      appendMessage(msg.text);
-    });
-  });
-
-  function appendMessage(text){
-    document.querySelectorAll('.messages-display').forEach(container => {
-      const row = document.createElement('div');
-      row.className = 'msg-row';
-      const bubble = document.createElement('div');
-      const isAdmin = text.toLowerCase().startsWith('admin:');
-      bubble.className = 'msg ' + (isAdmin ? 'admin' : 'user');
-      bubble.innerHTML = (isAdmin ? '<strong>Admin:</strong> ' : '') + (isAdmin ? text.slice(6).trim() : text);
-      row.appendChild(bubble);
-      container.appendChild(row);
-      container.scrollTop = container.scrollHeight;
-    });
-  }
-}
-
-/* Send message to Firebase */
-function sendMessage(inputId){
-  const input = document.getElementById(inputId);
-  if(!input) return;
-  const text = input.value.trim();
-  if(!text) return;
-  messagesRef.push({ text });
-  input.value = '';
-}
-
-/* Start listening on load */
-window.addEventListener('load', () => {
-  displayMessages();
-});
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 </script>
 </body>
 </html>
