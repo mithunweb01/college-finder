@@ -214,4 +214,225 @@ ul li a:hover {
     background: #003366;
     color: #fff;
     padding: 10px 12px;
-    bor
+    border-radius: 10px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+#messageForm {
+    max-width: 700px;
+    margin: 12px auto 30px;
+    display: flex;
+    gap: 10px;
+}
+#msgInput {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+#sendBtn {
+    padding: 10px 16px;
+    background: #003366;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* ======== Responsive ======== */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    .sidebar {
+        flex-direction: row;
+        overflow-x: auto;
+        width: 100%;
+        height: auto;
+    }
+    .tab-button {
+        flex: 1;
+        text-align: center;
+        border-left: none;
+        border-bottom: 4px solid transparent;
+    }
+    .tab-button.active {
+        border-bottom: 4px solid #ffcc00;
+    }
+    .flip-card { width: 45%; }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+    <!-- Sidebar Tabs -->
+    <div class="sidebar">
+        <h2>College Finder</h2>
+        <button class="tab-button active" onclick="showTab('home')">🏠 Home</button>
+        <button class="tab-button" onclick="showTab('chennai')">Chennai</button>
+        <button class="tab-button" onclick="showTab('pondy')">Pondicherry</button>
+        <button class="tab-button" onclick="showTab('coimbatore')">Coimbatore</button>
+        <button class="tab-button" onclick="showTab('trichy')">Trichy</button>
+        <button class="tab-button" onclick="showTab('madurai')">Madurai</button>
+        <button class="tab-button" onclick="showTab('message')">💬 Message</button>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content">
+        <!-- Home Tab -->
+        <div id="home" class="tab-content" style="display:block;">
+            <h1>Welcome to College Finder</h1>
+            <p>This site shows top colleges in popular cities in Tamil Nadu. <br>
+            Click a link below or use the sidebar to explore.</p>
+
+            <!-- Flip Board Section -->
+            <section id="flip-board">
+              <h2>Explore All Colleges Quickly</h2>
+              <div class="flip-board">
+
+                <!-- Chennai -->
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Chennai – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering_colleges_in_chennai.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Chennai – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical_college_in_chennai.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Chennai – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts-science_college_chennai.html">View</a></div></div></div>
+
+                <!-- Pondicherry -->
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Pondicherry – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering_pondy.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Pondicherry – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical_pondyy.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Pondicherry – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts_pondy.html">View</a></div></div></div>
+
+                <!-- Coimbatore -->
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Coimbatore – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering_coimbatore.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Coimbatore – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical_college_coimbatore.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Coimbatore – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts_science_coimbatore.html">View</a></div></div></div>
+
+                <!-- Trichy -->
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering-trichy.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical-trichy.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts-and-science-trichy.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Aviation</div><div class="flip-card-back"><h3>Top 5 Aviation Colleges</h3><a href="aviation-trichy.html">View</a></div></div></div>
+
+                <!-- Madurai -->
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Madurai – Aviation</div><div class="flip-card-back"><h3>Top 5 Aviation Colleges</h3><a href="aviaaon-maduur.html">View</a></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Madurai – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engeerg-ma.html">View</a></div></div></div>
+
+              </div>
+            </section>
+        </div>
+
+        <!-- Chennai Tab -->
+        <div id="chennai" class="tab-content" style="display:none;">
+            <h2>Chennai</h2>
+            <ul>
+                <li><a href="engineering_colleges_in_chennai.html">Top 5 Engineering Colleges</a></li>
+                <li><a href="medical_college_in_chennai.html">Top 5 Medical Colleges</a></li>
+                <li><a href="arts-science_college_chennai.html">Top 5 Arts & Science Colleges</a></li>
+            </ul>
+        </div>
+
+        <!-- Pondicherry Tab -->
+        <div id="pondy" class="tab-content" style="display:none;">
+            <h2>Pondicherry</h2>
+            <ul>
+                <li><a href="engineering_pondy.html">Top 5 Engineering Colleges</a></li>
+                <li><a href="medical_pondyy.html">Top 5 Medical Colleges</a></li>
+                <li><a href="arts_pondy.html">Top 5 Arts & Science Colleges</a></li>
+            </ul>
+        </div>
+
+        <!-- Coimbatore Tab -->
+        <div id="coimbatore" class="tab-content" style="display:none;">
+            <h2>Coimbatore</h2>
+            <ul>
+                <li><a href="engineering_coimbatore.html">Top 5 Engineering Colleges</a></li>
+                <li><a href="medical_college_coimbatore.html">Top 5 Medical Colleges</a></li>
+                <li><a href="arts_science_coimbatore.html">Top 5 Arts & Science Colleges</a></li>
+            </ul>
+        </div>
+
+        <!-- Trichy Tab -->
+        <div id="trichy" class="tab-content" style="display:none;">
+            <h2>Trichy</h2>
+            <ul>
+                <li><a href="engineering-trichy.html">Top 5 Engineering Colleges</a></li>
+                <li><a href="medical-trichy.html">Top 5 Medical Colleges</a></li>
+                <li><a href="arts-and-science-trichy.html">Top 5 Arts & Science Colleges</a></li>
+                <li><a href="aviation-trichy.html">Top 5 Aviation Colleges</a></li>
+            </ul>
+        </div>
+
+        <!-- Madurai Tab -->
+        <div id="madurai" class="tab-content" style="display:none;">
+            <h2>Madurai</h2>
+            <ul>
+                <li><a href="aviaaon-maduur.html">Top 5 Aviation Colleges</a></li>
+                <li><a href="engeerg-ma.html">Top 5 Engineering Colleges</a></li>
+            </ul>
+        </div>
+
+        <!-- Message Tab -->
+        <div id="message" class="tab-content" style="display:none;">
+            <h2>💬 Message Board</h2>
+            <p style="font-size:15px;color:#555;text-align:center;">Post your college preferences or questions. Everyone can view messages; start your reply with <strong>admin:</strong> to post as admin (styled differently).</p>
+
+            <div id="messagesContainer"></div>
+
+            <form id="messageForm" style="max-width:700px;margin:12px auto 30px;display:flex;gap:10px;">
+                <input id="msgInput" type="text" placeholder="Type your message..." required>
+                <button id="sendBtn" type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+    const target = document.getElementById(tabId);
+    if (target) target.style.display = 'block';
+    // mark clicked button active
+    try {
+      event.currentTarget.classList.add('active');
+    } catch(e){}
+}
+
+/* Message board with localStorage, admin detection, and auto-scroll */
+const messagesContainer = document.getElementById("messagesContainer");
+const messageForm = document.getElementById("messageForm");
+const msgInput = document.getElementById("msgInput");
+
+let messages = JSON.parse(localStorage.getItem("publicMessages") || "[]");
+
+function renderMessages() {
+  messagesContainer.innerHTML = "";
+  messages.forEach(m => {
+    const row = document.createElement("div");
+    row.className = "msg-row";
+    const bubble = document.createElement("div");
+    const isAdmin = /^admin:/i.test(m.text);
+    bubble.className = isAdmin ? "msg-admin" : "msg-user";
+    bubble.innerHTML = (isAdmin ? "<strong>Admin:</strong> " : "<strong>User:</strong> ") + m.text.replace(/^admin:/i, "").trim();
+    row.appendChild(bubble);
+    messagesContainer.appendChild(row);
+  });
+  // auto-scroll
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+renderMessages();
+
+messageForm.addEventListener("submit", function(e) {
+  e.preventDefault();
+  const text = msgInput.value.trim();
+  if (!text) return;
+  const msg = { text: text, time: Date.now() };
+  messages.push(msg);
+  localStorage.setItem("publicMessages", JSON.stringify(messages));
+  msgInput.value = "";
+  renderMessages();
+});
+</script>
+</body>
+</html>
