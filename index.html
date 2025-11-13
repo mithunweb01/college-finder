@@ -20,182 +20,233 @@
 </script>
 
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        color: #333;
+/* ======== Background + Layout ======== */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
 
-        /* ✨ Clean gradient background */
-        background: linear-gradient(135deg, #e6f0ff 0%, #f9fbff 100%);
+    /* ✨ Clean gradient background with pattern */
+    background: linear-gradient(135deg, #e6f0ff 0%, #f9fbff 100%);
+    background-image:
+      radial-gradient(circle at 25px 25px, rgba(0, 51, 102, 0.05) 2%, transparent 0),
+      radial-gradient(circle at 75px 75px, rgba(0, 51, 102, 0.05) 2%, transparent 0);
+    background-size: 100px 100px;
+}
 
-        /* Subtle geometric pattern (pure CSS — no image, no copyright) */
-        background-image:
-          radial-gradient(circle at 25px 25px, rgba(0, 51, 102, 0.05) 2%, transparent 0),
-          radial-gradient(circle at 75px 75px, rgba(0, 51, 102, 0.05) 2%, transparent 0);
-        background-size: 100px 100px;
-    }
+.container {
+    display: flex;
+    min-height: 100vh;
+    background: transparent;
+}
 
-    /* Layout */
+/* ======== Sidebar ======== */
+.sidebar {
+    width: 230px;
+    background: linear-gradient(180deg, #003366, #004080);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding-top: 20px;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+}
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #ffcc00;
+}
+.tab-button {
+    padding: 15px 20px;
+    text-align: left;
+    border: none;
+    background: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    border-left: 4px solid transparent;
+    transition: 0.3s;
+}
+.tab-button:hover, .tab-button.active {
+    background-color: #0055aa;
+    border-left: 4px solid #ffcc00;
+}
+
+/* ======== Content Area ======== */
+.content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    margin: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+h1 {
+    text-align: center;
+    color: darkred;
+    font-size: 36px;
+}
+h2 {
+    color: darkred;
+    text-align: center;
+}
+p {
+    text-align: center;
+    font-size: 18px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 18px;
+    line-height: 1.8;
+}
+ul li a {
+    color: blue;
+    text-decoration: none;
+}
+ul li a:hover {
+    text-decoration: underline;
+}
+
+/* ======== Flip Board Section ======== */
+#flip-board {
+    text-align: center;
+    background: #f5f7fb;
+    padding: 40px 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+.flip-board {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+.flip-card {
+    background-color: transparent;
+    width: 230px;
+    height: 150px;
+    perspective: 1000px;
+}
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.flip-card-front {
+    background: linear-gradient(135deg, #ffffff, #dbe9ff);
+    color: #003366;
+    font-weight: bold;
+}
+.flip-card-back {
+    background: #0066cc;
+    color: white;
+    transform: rotateY(180deg);
+}
+.flip-card-back a {
+    color: #333;
+    background: #ffcc00;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+/* ======== Message Tab ======== */
+#message {
+    display: none;
+}
+#message-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+#messages {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background: #fafafa;
+}
+.message {
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+}
+.message.user {
+    background: #e0f0ff;
+    text-align: right;
+}
+.message.admin {
+    background: #003366;
+    color: white;
+    text-align: left;
+}
+#message-input {
+    width: 80%;
+    padding: 10px;
+}
+#send-button {
+    padding: 10px 15px;
+    background: #003366;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* ======== Responsive ======== */
+@media (max-width: 768px) {
     .container {
-        display: flex;
-        height: 100vh;
-    }
-
-    /* Sidebar */
-    .sidebar {
-        width: 230px;
-        background: linear-gradient(180deg, #003366 0%, #004c99 100%);
-        color: white;
-        display: flex;
         flex-direction: column;
-        align-items: stretch;
-        padding-top: 20px;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
     }
-    .sidebar h2 {
-        text-align: center;
-        margin-bottom: 20px;
-        font-size: 22px;
-        color: #ffcc00;
+    .sidebar {
+        flex-direction: row;
+        overflow-x: auto;
+        width: 100%;
+        height: auto;
     }
     .tab-button {
-        padding: 15px 20px;
-        text-align: left;
-        border: none;
-        background: none;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-        width: 100%;
-        border-left: 4px solid transparent;
-        transition: 0.3s;
-    }
-    .tab-button:hover, .tab-button.active {
-        background-color: #0055aa;
-        border-left: 4px solid #ffcc00;
-    }
-
-    /* Content Area */
-    .content {
         flex: 1;
-        padding: 20px;
-        overflow-y: auto;
-    }
-    h1 {
         text-align: center;
-        color: darkred;
-        font-size: 36px;
+        border-left: none;
+        border-bottom: 4px solid transparent;
     }
-    h2 {
-        color: darkred;
-        text-align: center;
+    .tab-button.active {
+        border-bottom: 4px solid #ffcc00;
     }
-    p {
-        text-align: center;
-        font-size: 18px;
-    }
-
-    ul {
-        list-style: none;
-        padding: 0;
-        max-width: 700px;
-        margin: 0 auto;
-        font-size: 18px;
-        line-height: 1.8;
-    }
-    ul li a {
-        color: blue;
-        text-decoration: none;
-    }
-    ul li a:hover {
-        text-decoration: underline;
-    }
-
-    /* Flip Board Section */
-    #flip-board {
-        text-align: center;
-        background: #f5f7fb;
-        padding: 40px 20px;
-        border-radius: 10px;
-        margin-top: 30px;
-    }
-    .flip-board {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-    }
-    .flip-card {
-        background-color: transparent;
-        width: 230px;
-        height: 150px;
-        perspective: 1000px;
-    }
-    .flip-card-inner {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        transition: transform 0.6s;
-        transform-style: preserve-3d;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-    }
-    .flip-card:hover .flip-card-inner {
-        transform: rotateY(180deg);
-    }
-    .flip-card-front, .flip-card-back {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border-radius: 10px;
-        backface-visibility: hidden;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
-        box-sizing: border-box;
-    }
-    .flip-card-front {
-        background: linear-gradient(135deg, #ffffff, #dbe9ff);
-        color: #003366;
-        font-weight: bold;
-    }
-    .flip-card-back {
-        background: #0066cc;
-        color: white;
-        transform: rotateY(180deg);
-    }
-    .flip-card-back a {
-        color: #333;
-        background: #ffcc00;
-        text-decoration: none;
-        padding: 6px 12px;
-        border-radius: 4px;
-        font-weight: bold;
-        margin-top: 8px;
-    }
-
-    @media (max-width: 768px) {
-        .container {
-            flex-direction: column;
-        }
-        .sidebar {
-            flex-direction: row;
-            overflow-x: auto;
-            width: 100%;
-            height: auto;
-        }
-        .tab-button {
-            flex: 1;
-            text-align: center;
-            border-left: none;
-            border-bottom: 4px solid transparent;
-        }
-        .tab-button.active {
-            border-bottom: 4px solid #ffcc00;
-        }
-    }
+}
 </style>
 </head>
 
@@ -221,22 +272,19 @@
             <p>This site shows top colleges in popular cities in Tamil Nadu. <br>
             Click a link below or use the sidebar to explore.</p>
 
-            <!-- Flip Board Section -->
             <section id="flip-board">
               <h2>Explore All Colleges Quickly</h2>
               <div class="flip-board">
 
-                <!-- Flip cards (same as your original) -->
                 <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Chennai – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering_colleges_in_chennai.html">View</a></div></div></div>
                 <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Chennai – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical_college_in_chennai.html">View</a></div></div></div>
                 <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Chennai – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts-science_college_chennai.html">View</a></div></div></div>
 
-                <!-- (rest of your flip cards remain unchanged) -->
               </div>
             </section>
         </div>
 
-        <!-- City Tabs (same as before) -->
+        <!-- Chennai Tab -->
         <div id="chennai" class="tab-content" style="display:none;">
             <h2>Chennai</h2>
             <ul>
@@ -246,6 +294,7 @@
             </ul>
         </div>
 
+        <!-- Pondicherry Tab -->
         <div id="pondy" class="tab-content" style="display:none;">
             <h2>Pondicherry</h2>
             <ul>
@@ -255,6 +304,7 @@
             </ul>
         </div>
 
+        <!-- Coimbatore Tab -->
         <div id="coimbatore" class="tab-content" style="display:none;">
             <h2>Coimbatore</h2>
             <ul>
@@ -264,6 +314,7 @@
             </ul>
         </div>
 
+        <!-- Trichy Tab -->
         <div id="trichy" class="tab-content" style="display:none;">
             <h2>Trichy</h2>
             <ul>
@@ -274,6 +325,7 @@
             </ul>
         </div>
 
+        <!-- Madurai Tab -->
         <div id="madurai" class="tab-content" style="display:none;">
             <h2>Madurai</h2>
             <ul>
@@ -282,24 +334,14 @@
             </ul>
         </div>
 
-        <!-- 💬 Message Tab -->
+        <!-- Message Tab -->
         <div id="message" class="tab-content" style="display:none;">
-          <h2>💬 Message Board</h2>
-          <p>Post your college preferences or questions. Everyone can view messages, but only the admin can respond.</p>
-
-          <div id="messagesContainer" style="max-width:700px;margin:20px auto;padding:10px;background:white;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.1);min-height:200px;overflow-y:auto;"></div>
-
-          <form id="msgForm" style="max-width:700px;margin:20px auto;display:flex;gap:10px;">
-            <input id="msgInput" type="text" placeholder="Type your message..." required 
-                   style="flex:1;padding:10px;font-size:16px;border-radius:6px;border:1px solid #ccc;">
-            <button type="submit" style="padding:10px 20px;background:#003366;color:white;border:none;border-radius:6px;cursor:pointer;">
-              Send
-            </button>
-          </form>
-
-          <p style="font-size:14px;text-align:center;color:gray;">
-            Tip: To reply as admin, start your message with <strong>admin:</strong>
-          </p>
+            <h2>Message Box</h2>
+            <div id="message-container">
+                <div id="messages"></div>
+                <input type="text" id="message-input" placeholder="Type your message...">
+                <button id="send-button" onclick="sendMessage()">Send</button>
+            </div>
         </div>
     </div>
 </div>
@@ -312,43 +354,26 @@ function showTab(tabId) {
     event.currentTarget.classList.add('active');
 }
 
-/* 💬 Message System */
-const msgContainer = document.getElementById("messagesContainer");
-const msgForm = document.getElementById("msgForm");
-const msgInput = document.getElementById("msgInput");
+function sendMessage() {
+    const input = document.getElementById("message-input");
+    const messages = document.getElementById("messages");
+    const text = input.value.trim();
+    if (!text) return;
 
-let messages = JSON.parse(localStorage.getItem("publicMessages") || "[]");
-renderMessages();
+    const msg = document.createElement("div");
+    msg.classList.add("message");
 
-msgForm.addEventListener("submit", e => {
-  e.preventDefault();
-  const text = msgInput.value.trim();
-  if (!text) return;
-  const msg = {
-    text,
-    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-  };
-  messages.push(msg);
-  localStorage.setItem("publicMessages", JSON.stringify(messages));
-  msgInput.value = "";
-  renderMessages();
-});
+    if (text.toLowerCase().startsWith("admin:")) {
+        msg.classList.add("admin");
+        msg.textContent = text;
+    } else {
+        msg.classList.add("user");
+        msg.textContent = text;
+    }
 
-function renderMessages() {
-  msgContainer.innerHTML = "";
-  messages.forEach(msg => {
-    const div = document.createElement("div");
-    const isAdmin = msg.text.toLowerCase().startsWith("admin:");
-    div.style.background = isAdmin ? "#003366" : "#f0f4ff";
-    div.style.color = isAdmin ? "white" : "#003366";
-    div.style.padding = "10px 15px";
-    div.style.margin = "10px 0";
-    div.style.borderRadius = "8px";
-    div.style.wordWrap = "break-word";
-    div.innerHTML = `<strong>${isAdmin ? "Admin" : "User"}:</strong> ${msg.text.replace(/^admin:/i, "").trim()} 
-      <span style="float:right;font-size:12px;color:${isAdmin ? "#ddd" : "#666"};">${msg.time}</span>`;
-    msgContainer.appendChild(div);
-  });
+    messages.appendChild(msg);
+    input.value = "";
+    messages.scrollTop = messages.scrollHeight;
 }
 </script>
 </body>
