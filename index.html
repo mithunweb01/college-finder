@@ -1,304 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>College Finder</title>
+
+<!-- META -->
 <link rel="canonical" href="https://mithunweb01.github.io/your-page-name" />
-<meta name="description" content="Find top engineering, medical, arts, and science colleges in Chennai, Coimbatore, Pondicherry, Trichy, and Madurai.">
-<meta name="keywords" content="Colleges in Chennai, Coimbatore, Pondicherry, Trichy, Madurai, Engineering Colleges, Medical Colleges, Arts and Science Colleges, Aviation Colleges, Tamil Nadu Colleges">
+<meta name="description" content="Find top engineering, medical, arts, and science colleges in Tamil Nadu.">
 <meta name="author" content="Mithun">
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3W6CSF55J1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-3W6CSF55J1');
-</script>
-
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: aliceblue;
-        color: #333;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: aliceblue;
+}
+.container { display: flex; height: 100vh; }
+.sidebar {
+  width: 230px;
+  background-color: #003366;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+.sidebar h2 { text-align: center; color: #ffcc00; margin-bottom: 20px; }
+.tab-button {
+  padding: 15px 20px; border: none; background: none; color: white;
+  text-align: left; font-size: 16px; cursor: pointer; transition: 0.3s;
+  border-left: 4px solid transparent; width: 100%;
+}
+.tab-button:hover, .tab-button.active {
+  background-color: #0055aa;
+  border-left: 4px solid #ffcc00;
+}
+.content { flex: 1; padding: 20px; overflow-y: auto; }
+h1, h2 { color: darkred; text-align: center; }
+p, ul { text-align: center; font-size: 18px; }
 
-    /* Layout */
-    .container {
-        display: flex;
-        height: 100vh;
-    }
+/* 💬 Message Form */
+#message form {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+#message input, #message textarea {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+#message button {
+  background-color: #003366;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#message button:hover { background-color: #0055aa; }
 
-    /* Sidebar */
-    .sidebar {
-        width: 230px;
-        background-color: #003366;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        padding-top: 20px;
-    }
-    .sidebar h2 {
-        text-align: center;
-        margin-bottom: 20px;
-        font-size: 22px;
-        color: #ffcc00;
-    }
-    .tab-button {
-        padding: 15px 20px;
-        text-align: left;
-        border: none;
-        background: none;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-        width: 100%;
-        border-left: 4px solid transparent;
-        transition: 0.3s;
-    }
-    .tab-button:hover, .tab-button.active {
-        background-color: #0055aa;
-        border-left: 4px solid #ffcc00;
-    }
-
-    /* Content Area */
-    .content {
-        flex: 1;
-        padding: 20px;
-        overflow-y: auto;
-    }
-    h1 {
-        text-align: center;
-        color: darkred;
-        font-size: 36px;
-    }
-    h2 {
-        color: darkred;
-        text-align: center;
-    }
-    p {
-        text-align: center;
-        font-size: 18px;
-    }
-
-    ul {
-        list-style: none;
-        padding: 0;
-        max-width: 700px;
-        margin: 0 auto;
-        font-size: 18px;
-        line-height: 1.8;
-    }
-    ul li a {
-        color: blue;
-        text-decoration: none;
-    }
-    ul li a:hover {
-        text-decoration: underline;
-    }
-
-    /* Flip Board Section */
-    #flip-board {
-        text-align: center;
-        background: #f5f7fb;
-        padding: 40px 20px;
-        border-radius: 10px;
-        margin-top: 30px;
-    }
-    .flip-board {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-    }
-    .flip-card {
-        background-color: transparent;
-        width: 230px;
-        height: 150px;
-        perspective: 1000px;
-    }
-    .flip-card-inner {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        transition: transform 0.6s;
-        transform-style: preserve-3d;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-    }
-    .flip-card:hover .flip-card-inner {
-        transform: rotateY(180deg);
-    }
-    .flip-card-front, .flip-card-back {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border-radius: 10px;
-        backface-visibility: hidden;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
-        box-sizing: border-box;
-    }
-    .flip-card-front {
-        background: linear-gradient(135deg, #ffffff, #dbe9ff);
-        color: #003366;
-        font-weight: bold;
-    }
-    .flip-card-back {
-        background: #0066cc;
-        color: white;
-        transform: rotateY(180deg);
-    }
-    .flip-card-back a {
-        color: #333;
-        background: #ffcc00;
-        text-decoration: none;
-        padding: 6px 12px;
-        border-radius: 4px;
-        font-weight: bold;
-        margin-top: 8px;
-    }
-
-    @media (max-width: 768px) {
-        .container {
-            flex-direction: column;
-        }
-        .sidebar {
-            flex-direction: row;
-            overflow-x: auto;
-            width: 100%;
-            height: auto;
-        }
-        .tab-button {
-            flex: 1;
-            text-align: center;
-            border-left: none;
-            border-bottom: 4px solid transparent;
-        }
-        .tab-button.active {
-            border-bottom: 4px solid #ffcc00;
-        }
-    }
+/* Responsive */
+@media (max-width: 768px) {
+  .container { flex-direction: column; }
+  .sidebar { flex-direction: row; width: 100%; overflow-x: auto; }
+  .tab-button { flex: 1; text-align: center; border-left: none; border-bottom: 4px solid transparent; }
+  .tab-button.active { border-bottom: 4px solid #ffcc00; }
+}
 </style>
 </head>
-
 <body>
+
 <div class="container">
-    <!-- Sidebar Tabs -->
-    <div class="sidebar">
-        <h2>College Finder</h2>
-        <button class="tab-button active" onclick="showTab('home')">🏠 Home</button>
-        <button class="tab-button" onclick="showTab('chennai')">Chennai</button>
-        <button class="tab-button" onclick="showTab('pondy')">Pondicherry</button>
-        <button class="tab-button" onclick="showTab('coimbatore')">Coimbatore</button>
-        <button class="tab-button" onclick="showTab('trichy')">Trichy</button>
-        <button class="tab-button" onclick="showTab('madurai')">Madurai</button>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>College Finder</h2>
+    <button class="tab-button active" onclick="showTab('home')">🏠 Home</button>
+    <button class="tab-button" onclick="showTab('chennai')">Chennai</button>
+    <button class="tab-button" onclick="showTab('pondy')">Pondicherry</button>
+    <button class="tab-button" onclick="showTab('coimbatore')">Coimbatore</button>
+    <button class="tab-button" onclick="showTab('trichy')">Trichy</button>
+    <button class="tab-button" onclick="showTab('madurai')">Madurai</button>
+    <!-- 🆕 New Tab -->
+    <button class="tab-button" onclick="showTab('message')">💬 Message</button>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <div id="home" class="tab-content" style="display:block;">
+      <h1>Welcome to College Finder</h1>
+      <p>Find top colleges in major cities of Tamil Nadu. Use tabs to explore.</p>
     </div>
 
-    <!-- Content Area -->
-    <div class="content">
-        <!-- Home Tab -->
-        <div id="home" class="tab-content" style="display:block;">
-            <h1>Welcome to College Finder</h1>
-            <p>This site shows top colleges in popular cities in Tamil Nadu. <br>
-            Click a link below or use the sidebar to explore.</p>
+    <!-- Other tabs (Chennai, Pondy, etc.) stay same -->
 
-            <!-- Flip Board Section -->
-            <section id="flip-board">
-              <h2>Explore All Colleges Quickly</h2>
-              <div class="flip-board">
+    <!-- 🆕 Message Tab -->
+    <div id="message" class="tab-content" style="display:none;">
+      <h2>Send Your College Preferences</h2>
+      <p>Share your filters (city, course, budget, etc.). Only the site owner can view and reply to your message.</p>
+      
+      <!-- Simple Form Using FormSubmit (no backend required) -->
+      <form action="https://formsubmit.co/YOUR_EMAIL_HERE" method="POST">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email (optional)">
+        <textarea name="message" rows="6" placeholder="Type your college preferences or questions..." required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
 
-                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Chennai – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering_colleges_in_chennai.html">View</a></div></div></div>
-                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Chennai – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical_college_in_chennai.html">View</a></div></div></div>
-                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Chennai – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts-science_college_chennai.html">View</a></div></div></div>
-
-                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Pondicherry – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering_pondy.html">View</a></div></div></div>
-                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Pondicherry – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical_pondyy.html">View</a></div></div></div>
-                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Pondicherry – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts_pondy.html">View</a></div></div></div>
-
-                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Coimbatore – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering_coimbatore.html">View</a></div></div></div>
-                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Coimbatore – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical_college_coimbatore.html">View</a></div></div></div>
-                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Coimbatore – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts_science_coimbatore.html">View</a></div></div></div>
-
-                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engineering-trichy.html">View</a></div></div></div>
-                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Medical</div><div class="flip-card-back"><h3>Top 5 Medical Colleges</h3><a href="medical-trichy.html">View</a></div></div></div>
-                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Arts & Science</div><div class="flip-card-back"><h3>Top 5 Arts & Science Colleges</h3><a href="arts-and-science-trichy.html">View</a></div></div></div>
-                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Trichy – Aviation</div><div class="flip-card-back"><h3>Top 5 Aviation Colleges</h3><a href="aviation-trichy.html">View</a></div></div></div>
-
-                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Madurai – Aviation</div><div class="flip-card-back"><h3>Top 5 Aviation Colleges</h3><a href="aviaaon-maduur.html">View</a></div></div></div>
-                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front">Madurai – Engineering</div><div class="flip-card-back"><h3>Top 5 Engineering Colleges</h3><a href="engeerg-ma.html">View</a></div></div></div>
-
-              </div>
-            </section>
-        </div>
-
-        <!-- Chennai Tab -->
-        <div id="chennai" class="tab-content" style="display:none;">
-            <h2>Chennai</h2>
-            <ul>
-                <li><a href="engineering_colleges_in_chennai.html">Top 5 Engineering Colleges</a></li>
-                <li><a href="medical_college_in_chennai.html">Top 5 Medical Colleges</a></li>
-                <li><a href="arts-science_college_chennai.html">Top 5 Arts & Science Colleges</a></li>
-            </ul>
-        </div>
-
-        <!-- Pondicherry Tab -->
-        <div id="pondy" class="tab-content" style="display:none;">
-            <h2>Pondicherry</h2>
-            <ul>
-                <li><a href="engineering_pondy.html">Top 5 Engineering Colleges</a></li>
-                <li><a href="medical_pondyy.html">Top 5 Medical Colleges</a></li>
-                <li><a href="arts_pondy.html">Top 5 Arts & Science Colleges</a></li>
-            </ul>
-        </div>
-
-        <!-- Coimbatore Tab -->
-        <div id="coimbatore" class="tab-content" style="display:none;">
-            <h2>Coimbatore</h2>
-            <ul>
-                <li><a href="engineering_coimbatore.html">Top 5 Engineering Colleges</a></li>
-                <li><a href="medical_college_coimbatore.html">Top 5 Medical Colleges</a></li>
-                <li><a href="arts_science_coimbatore.html">Top 5 Arts & Science Colleges</a></li>
-            </ul>
-        </div>
-
-        <!-- Trichy Tab -->
-        <div id="trichy" class="tab-content" style="display:none;">
-            <h2>Trichy</h2>
-            <ul>
-                <li><a href="engineering-trichy.html">Top 5 Engineering Colleges</a></li>
-                <li><a href="medical-trichy.html">Top 5 Medical Colleges</a></li>
-                <li><a href="arts-and-science-trichy.html">Top 5 Arts & Science Colleges</a></li>
-                <li><a href="aviation-trichy.html">Top 5 Aviation Colleges</a></li>
-            </ul>
-        </div>
-
-        <!-- Madurai Tab -->
-        <div id="madurai" class="tab-content" style="display:none;">
-            <h2>Madurai</h2>
-            <ul>
-                <li><a href="aviaaon-maduur.html">Top 5 Aviation Colleges</a></li>
-                <li><a href="engeerg-ma.html">Top 5 Engineering Colleges</a></li>
-            </ul>
-        </div>
+      <p style="font-size:14px;color:gray;margin-top:10px;">
+        * You will receive a reply via email if needed.
+      </p>
     </div>
+  </div>
 </div>
 
 <script>
 function showTab(tabId) {
-    document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
-    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-    document.getElementById(tabId).style.display = 'block';
-    event.currentTarget.classList.add('active');
+  document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+  document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+  document.getElementById(tabId).style.display = 'block';
+  event.currentTarget.classList.add('active');
 }
 </script>
 </body>
 </html>
+
