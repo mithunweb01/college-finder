@@ -3,45 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>College Finder — Dashboard & Messages</title>
+  <title>College Finder — Firebase Messages</title>
   <link rel="icon" type="image/png" href="my-logo.png">
-
   <style>
-    :root{
-      --brand:#0a3d62;
-      --accent:#ffcc00;
-      --muted:#7b8aa5;
-      --card:#ffffff;
-      --bg:#eef3f8;
-      --maxw:1100px;
-    }
+    :root{--brand:#0a3d62;--accent:#ffcc00;--bg:#eef3f8;--card:#fff}
     *{box-sizing:border-box}
-    body{margin:0;font-family:Arial, Helvetica, sans-serif;background:var(--bg);color:#213547;-webkit-font-smoothing:antialiased}
-    header{background:var(--brand);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:30}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:#123}
+    header{background:var(--brand);color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
     header h1{margin:0;font-size:20px}
-    header .right{display:flex;gap:10px;align-items:center}
-
-    /* layout */
-    .wrap{display:flex;gap:18px;max-width:var(--maxw);margin:18px auto;padding:0 16px}
+    .wrap{display:flex;gap:18px;max-width:1100px;margin:18px auto;padding:0 12px}
     .sidebar{width:230px;background:var(--brand);color:#fff;border-radius:10px;padding:12px;min-height:70vh;position:sticky;top:78px}
-    .sidebar .logo{display:flex;align-items:center;gap:8px;padding:8px 6px}
-    .sidebar .logo img{height:46px;width:46px;border-radius:8px;object-fit:cover}
-    .tab-button{display:block;padding:10px 12px;color:#fff;text-decoration:none;border-radius:6px;margin:6px 0;border-left:4px solid transparent;cursor:pointer}
+    .logo{display:flex;gap:8px;align-items:center}
+    .logo img{height:44px;width:44px;border-radius:8px;object-fit:cover}
+    .tab-button{display:block;padding:10px 12px;color:#fff;text-decoration:none;border-radius:6px;margin:6px 0;border-left:4px solid transparent;cursor:pointer;background:transparent;border:none;text-align:left}
     .tab-button:hover{background:#074068}
     .tab-button.active{background:#052a4a;border-left:4px solid var(--accent)}
-    main.content{flex:1;min-height:60vh}
-
-    /* cards & flipboards */
-    .card{background:var(--card);padding:16px;border-radius:10px;margin-bottom:16px;box-shadow:0 6px 18px rgba(6,30,60,0.06)}
-    .lead{color:var(--muted);max-width:900px}
-    #flip-board{background:#f5f7fb;padding:18px;border-radius:10px}
+    main{flex:1}
+    .card{background:var(--card);padding:14px;border-radius:10px;margin-bottom:16px;box-shadow:0 6px 18px rgba(6,30,60,0.06)}
     .flip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
-    .flip{background:linear-gradient(135deg,#fff,#dbe9ff);border-radius:10px;height:130px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:12px;cursor:pointer;position:relative;overflow:hidden}
-    .flip h3{margin:0;color:var(--brand)}
-    .flip p{margin:6px 0 0;color:#05305b;font-weight:600}
+    .flip{background:linear-gradient(135deg,#fff,#dbe9ff);border-radius:10px;height:130px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:12px;position:relative;cursor:pointer}
     .view-btn{position:absolute;right:10px;bottom:10px;background:var(--accent);color:#111;padding:6px 10px;border-radius:6px;border:none;cursor:pointer;font-weight:700}
-
-    /* messages (WhatsApp-like) */
+    /* messages */
     #messages-wrap{display:flex;gap:12px;height:70vh}
     .chats-list{width:320px;background:var(--card);border-radius:10px;padding:10px;overflow:auto}
     .chat-window{flex:1;background:var(--card);border-radius:10px;padding:10px;display:flex;flex-direction:column}
@@ -53,22 +35,14 @@
     .chat-input{display:flex;gap:8px;padding-top:8px}
     .chat-input input{flex:1;padding:10px;border-radius:8px;border:1px solid #ddd}
     .chat-input button{padding:10px 14px;border-radius:8px;border:none;background:var(--brand);color:#fff;cursor:pointer}
-
-    /* forms */
-    .form-row{display:flex;gap:8px}
-    input[type="text"], input[type="password"], input[type="date"]{width:100%;padding:10px;border-radius:8px;border:1px solid #ccc}
-    .small{font-size:13px;color:var(--muted)}
-
     /* responsive */
     @media(max-width:900px){
-      .wrap{padding:0 10px}
-      .sidebar{position:relative;width:100%;display:flex;overflow-x:auto;padding:8px;gap:6px;border-radius:8px}
+      .wrap{flex-direction:column;padding:0 10px}
+      .sidebar{width:100%;display:flex;overflow-x:auto;gap:8px}
       .tab-button{flex:0 0 auto;padding:8px 12px;border-left:none;border-bottom:3px solid transparent}
       .tab-button.active{border-bottom:4px solid var(--accent)}
-      .wrap{flex-direction:column}
       #messages-wrap{flex-direction:column;height:60vh}
-      .chats-list{width:100%;order:2}
-      .chat-window{order:1}
+      .chats-list{width:100%}
     }
   </style>
 </head>
@@ -79,639 +53,237 @@
     <img src="my-logo.jpg" alt="logo" style="height:36px;width:36px;border-radius:6px;object-fit:cover">
     <h1>College Finder</h1>
   </div>
-  <div class="right">
-    <div id="session-info" style="display:flex;align-items:center;gap:10px">
-      <span id="welcomeTxt" class="small">Not signed in</span>
-      <button id="btn-login" style="background:transparent;border:1px solid rgba(255,255,255,0.12);padding:8px 12px;border-radius:8px;color:#fff;cursor:pointer">Login / Signup</button>
-    </div>
+  <div id="auth-area" style="display:flex;align-items:center;gap:10px">
+    <span id="welcomeTxt" style="color:#fff;font-size:14px">Not signed in</span>
+    <button id="btn-auth" style="background:transparent;border:1px solid rgba(255,255,255,0.18);color:#fff;padding:8px 10px;border-radius:8px;cursor:pointer">Login / Signup</button>
   </div>
 </header>
 
 <div class="wrap">
   <aside class="sidebar" id="sidebar">
-    <div class="logo">
-      <img src="my-logo.jpg" alt="logo">
-      <div>
-        <div style="font-weight:700">College Finder</div>
-        <div class="small">Top colleges — South India</div>
-      </div>
-    </div>
+    <div class="logo"><img src="my-logo.jpg"><div style="font-weight:700">College Finder</div></div>
 
-    <!-- core tabs (do not change names) -->
-    <button class="tab-button active" data-tab="home" onclick="switchTab('home', this)">🏠 Home</button>
-    <button class="tab-button" data-tab="chennai" onclick="switchTab('chennai', this)">Chennai</button>
-    <button class="tab-button" data-tab="pondy" onclick="switchTab('pondy', this)">Pondicherry</button>
-    <button class="tab-button" data-tab="coimbatore" onclick="switchTab('coimbatore', this)">Coimbatore</button>
-    <button class="tab-button" data-tab="trichy" onclick="switchTab('trichy', this)">Trichy</button>
-    <button class="tab-button" data-tab="madurai" onclick="switchTab('madurai', this)">Madurai</button>
+    <button class="tab-button active" data-tab="home" onclick="switchTab('home',this)">🏠 Home</button>
+    <button class="tab-button" data-tab="chennai" onclick="switchTab('chennai',this)">Chennai</button>
+    <button class="tab-button" data-tab="pondy" onclick="switchTab('pondy',this)">Pondicherry</button>
+    <button class="tab-button" data-tab="coimbatore" onclick="switchTab('coimbatore',this)">Coimbatore</button>
+    <button class="tab-button" data-tab="trichy" onclick="switchTab('trichy',this)">Trichy</button>
+    <button class="tab-button" data-tab="madurai" onclick="switchTab('madurai',this)">Madurai</button>
 
-    <!-- Messages tab will be injected dynamically after login -->
     <div style="margin-top:12px;border-top:1px solid rgba(255,255,255,0.06);padding-top:12px">
-      <div class="small" style="opacity:0.9;padding:8px 6px">Logged in as:</div>
-      <div id="sidebar-user" style="padding:6px 8px;font-weight:700"></div>
-      <button class="tab-button" style="background:transparent;margin-top:8px" onclick="doLogout()">Logout</button>
-    </div>
+      <div style="font-size:13px;color:#dfe9f5">Logged in user</div>
+      <div id="sidebar-user" style="font-weight:700;margin-top:6px">—</div>
+          </div>
   </aside>
 
-  <main class="content">
-    <!-- HOME -->
-    <section id="home" class="card tab-content" style="display:block">
-      <h2 class="page-title">Welcome to College Finder</h2>
-      <p class="lead">Find colleges across Tamil Nadu. Use flipboards below to explore by city and category. Click <b>View</b> to open the specific page (login required).</p>
+  <main id="content">
 
-      <div id="flip-board" class="card">
-        <h3 style="margin-top:0;color:darkred;text-align:center">Explore All Colleges Quickly</h3>
-        <div class="flip-grid" id="flip-grid">
-          <!-- flip cards inserted by JS -->
+    <!-- HOME TAB -->
+    <div id="home" class="card">
+      <h2>Welcome to College Finder</h2>
+      <p>Select a city from the sidebar to explore colleges.</p>
+
+      <div class="flip-grid">
+        <div class="flip">
+          <div style="font-size:22px;font-weight:700">300+</div>
+          <div>Colleges Listed</div>
+        </div>
+        <div class="flip">
+          <div style="font-size:22px;font-weight:700">Verified</div>
+          <div>Trusted Information</div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- CITY TEMPLATES -->
-    <section id="chennai" class="card tab-content" style="display:none">
-      <h2 style="text-align:center;color:darkred">Chennai</h2>
-      <div id="chennai-content" class="city-content"></div>
-    </section>
+    <!-- CITY PAGES (dummy content) -->
+    <div id="chennai" class="card" style="display:none">
+      <h2>Chennai Colleges</h2>
+      <p>List coming soon…</p>
+    </div>
 
-    <section id="pondy" class="card tab-content" style="display:none">
-      <h2 style="text-align:center;color:darkred">Pondicherry</h2>
-      <div id="pondy-content" class="city-content"></div>
-    </section>
+    <div id="pondy" class="card" style="display:none">
+      <h2>Pondicherry Colleges</h2>
+      <p>List coming soon…</p>
+    </div>
 
-    <section id="coimbatore" class="card tab-content" style="display:none">
-      <h2 style="text-align:center;color:darkred">Coimbatore</h2>
-      <div id="coimbatore-content" class="city-content"></div>
-    </section>
+    <div id="coimbatore" class="card" style="display:none">
+      <h2>Coimbatore Colleges</h2>
+      <p>List coming soon…</p>
+    </div>
 
-    <section id="trichy" class="card tab-content" style="display:none">
-      <h2 style="text-align:center;color:darkred">Trichy</h2>
-      <div id="trichy-content" class="city-content"></div>
-    </section>
+    <div id="trichy" class="card" style="display:none">
+      <h2>Trichy Colleges</h2>
+      <p>List coming soon…</p>
+    </div>
 
-    <section id="madurai" class="card tab-content" style="display:none">
-      <h2 style="text-align:center;color:darkred">Madurai</h2>
-      <div id="madurai-content" class="city-content"></div>
-    </section>
+    <div id="madurai" class="card" style="display:none">
+      <h2>Madurai Colleges</h2>
+      <p>List coming soon…</p>
+    </div>
 
-    <!-- MESSAGES (injected after login) -->
-    <section id="messages" class="card tab-content" style="display:none">
-      <h2 style="text-align:center;color:darkred">Messages</h2>
-      <div id="messages-wrap" style="margin-top:12px"></div>
-    </section>
+    <!-- MESSAGES TAB -->
+    <div id="messages" class="card" style="display:none">
+      <h2>Messages</h2>
 
-    <!-- ADMIN DASHBOARD (only visible to admin) -->
-    <section id="admin-panel" class="card tab-content" style="display:none">
-      <h2 style="text-align:center;color:darkred">Admin Dashboard</h2>
-      <div id="admin-wrap" style="margin-top:12px"></div>
-    </section>
+      <div id="messages-wrap">
+        <div class="chats-list" id="chatList"></div>
+
+        <div class="chat-window">
+          <div class="chat-header" id="chatHeader">
+            <strong>Select a chat</strong>
+          </div>
+
+          <div class="messages" id="chatMessages"></div>
+
+          <div class="chat-input">
+            <input id="msgInput" type="text" placeholder="Type a message…">
+            <button onclick="sendMessage()">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </main>
 </div>
 
-<!-- LOGIN / SIGNUP POPUP -->
-<div id="authPopup" class="popup-bg" style="display:none;position:fixed;left:0;top:0;right:0;bottom:0;justify-content:center;align-items:center;background:rgba(0,0,0,0.6);z-index:60">
-  <div style="background:#fff;padding:18px;border-radius:10px;width:340px;max-width:96%">
-    <h3 id="authTitle" style="margin:0 0 6px 0">Login</h3>
+<!-- AUTH POPUP -->
+<div id="authPopup" style="display:none;position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.55);justify-content:center;align-items:center">
+  <div style="background:#fff;padding:20px;border-radius:12px;width:300px">
+    <h3 style="margin-top:0">Login / Signup</h3>
 
-    <div id="loginForm">
-      <input id="loginUsername" placeholder="Username" type="text" />
-      <input id="loginPassword" placeholder="Password (for admin or created accounts)" type="password" />
-      <div style="display:flex;gap:8px;margin-top:8px">
-        <button class="btn" style="flex:1" onclick="doLogin()">Login</button>
-        <button class="btn" style="flex:1;background:#777" onclick="showSignup()">Create account</button>
-      </div>
-      <div style="margin-top:8px" class="small">Or create account with username + DOB</div>
-    </div>
+    <input id="authEmail" type="email" placeholder="Email" style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #ccc">
+    <input id="authPass" type="password" placeholder="Password" style="width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #ccc">
 
-    <div id="signupForm" style="display:none">
-      <input id="suUsername" placeholder="Choose username" type="text" />
-      <input id="suDob" placeholder="DOB (YYYY-MM-DD)" type="date" />
-      <input id="suPassword" placeholder="Password (optional)" type="password" />
-      <div style="display:flex;gap:8px;margin-top:8px">
-        <button class="btn" style="flex:1" onclick="doSignup()">Create</button>
-        <button class="btn" style="flex:1;background:#777" onclick="showLogin()">Back</button>
-      </div>
-    </div>
-
-    <div style="margin-top:10px;text-align:right"><button onclick="closeAuth()" style="background:transparent;border:none;color:#555;cursor:pointer">Close</button></div>
+    <button onclick="login()" style="width:100%;padding:10px;background:#0a3d62;color:#fff;border:none;border-radius:8px;margin-top:6px">Login</button>
+    <button onclick="signup()" style="width:100%;padding:10px;background:#ffcc00;border:none;border-radius:8px;margin-top:6px">Signup</button>
+    <button onclick="closeAuth()" style="width:100%;padding:10px;background:#ddd;border:none;border-radius:8px;margin-top:6px">Close</button>
   </div>
 </div>
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js"></script>
+
 <script>
-/* -------------------------
-   Local storage helpers
-   ------------------------- */
-function loadStore(key){ try{ return JSON.parse(localStorage.getItem(key)) || []; }catch(e){ return []; } }
-function saveStore(key, v){ localStorage.setItem(key, JSON.stringify(v)); }
+/* ---------------- FIREBASE CONFIG ----------------- */
+const firebaseConfig = {
+  apiKey: "YOUR_KEY",
+  authDomain: "YOUR_DOMAIN",
+  databaseURL: "YOUR_DB",
+  projectId: "YOUR_ID",
+  storageBucket: "YOUR_BUCKET",
+  messagingSenderId: "YOUR_SENDER",
+  appId: "YOUR_APPID"
+};
 
-/* Preload arrays */
-let users = loadStore('cf_users');     // {username, dob, password, isAdmin}
-let messages = loadStore('cf_messages'); // {id, from, to, text, time}
-let session = JSON.parse(localStorage.getItem('cf_session') || 'null'); // {username, isAdmin}
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.database();
 
-/* If no users exist, create a default admin account per your request */
-(function ensureAdmin(){
-  const adminUser = users.find(u => u.username === 'Mithun');
-  if(!adminUser){
-    users.push({ username: 'Mithun', dob: '2014-11-15', password: 'admin123', isAdmin: true });
-    saveStore('cf_users', users);
-  } else {
-    // ensure admin flag and password match (only set if missing)
-    adminUser.isAdmin = true;
-    if(!adminUser.password) adminUser.password = 'admin123';
-    saveStore('cf_users', users);
-  }
-})();
+/* ---------------- UI TABS ----------------- */
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
 
-/* -------------------------
-   UI helpers & Tab switching
-   ------------------------- */
-function switchTab(tab, el){
-  document.querySelectorAll('.tab-button').forEach(b=>b.classList.remove('active'));
-  if(el) el.classList.add('active');
-
-  document.querySelectorAll('.tab-content').forEach(s=>s.style.display='none');
-  const sel = document.getElementById(tab);
-  if(sel) sel.style.display = 'block';
-
-  // if messages tab is selected and logged in, refresh
-  if(tab === 'messages') buildMessagesUI();
-  if(tab === 'admin-panel') buildAdminUI();
+  document.querySelectorAll('main .card').forEach(c => c.style.display = 'none');
+  document.getElementById(tab).style.display = 'block';
 }
 
-document.getElementById('btn-login').addEventListener('click', ()=> openAuth() );
-function openAuth(){ document.getElementById('authPopup').style.display='flex'; showLogin(); }
-function closeAuth(){ document.getElementById('authPopup').style.display='none'; }
+/* ---------------- AUTH POPUP ----------------- */
+function openAuth(){ authPopup.style.display="flex"; }
+function closeAuth(){ authPopup.style.display="none"; }
 
-function showSignup(){ document.getElementById('loginForm').style.display='none'; document.getElementById('signupForm').style.display='block'; document.getElementById('authTitle').textContent='Create account'; }
-function showLogin(){ document.getElementById('loginForm').style.display='block'; document.getElementById('signupForm').style.display='none'; document.getElementById('authTitle').textContent='Login'; }
+btn-auth.onclick = openAuth;
 
-/* -------------------------
-   Signup / Login / Logout
-   ------------------------- */
-function doSignup(){
-  const u = (document.getElementById('suUsername').value||'').trim();
-  const dob = (document.getElementById('suDob').value||'').trim();
-  const pw = (document.getElementById('suPassword').value||'').trim();
-  if(!u || !dob) return alert('Provide username and DOB');
-
-  if(users.find(x=>x.username.toLowerCase()===u.toLowerCase())){
-    return alert('Username already exists. Please pick another.');
-  }
-
-  const newUser = { username: u, dob: dob, password: pw || '', isAdmin: false };
-  users.push(newUser); saveStore('cf_users', users);
-  session = { username: u, isAdmin: false }; localStorage.setItem('cf_session', JSON.stringify(session));
-  updateSessionUI();
-  closeAuth();
-  injectMessagesTab();
-  alert('Account created and logged in as ' + u);
+function signup(){
+  auth.createUserWithEmailAndPassword(authEmail.value, authPass.value)
+    .then(()=>closeAuth())
+    .catch(e=>alert(e.message));
 }
 
-function doLogin(){
-  const u = (document.getElementById('loginUsername').value||'').trim();
-  const pw = (document.getElementById('loginPassword').value||'').trim();
-  if(!u) return alert('Enter username');
+function login(){
+  auth.signInWithEmailAndPassword(authEmail.value, authPass.value)
+    .then(()=>closeAuth())
+    .catch(e=>alert(e.message));
+}
 
-  // Check admin exact credentials first
-  const byName = users.find(x => x.username.toLowerCase() === u.toLowerCase());
-  if(byName){
-    // if password provided, match it (admin uses password). If empty and DOB matches, allow login (DOB fallback)
-    if(byName.password && pw){
-      if(byName.password === pw){
-        session = { username: byName.username, isAdmin: !!byName.isAdmin };
-      } else {
-        return alert('Wrong password');
-      }
-    } else {
-      // no password provided — accept login if user has dob stored and prompt with a confirm
-      const promptDob = prompt('Enter DOB (YYYY-MM-DD) to login as ' + byName.username);
-      if(!promptDob) return;
-      if(byName.dob === promptDob){
-        session = { username: byName.username, isAdmin: !!byName.isAdmin };
-      } else {
-        return alert('DOB does not match');
-      }
+/* ---------------- AUTH STATE ----------------- */
+auth.onAuthStateChanged(user=>{
+  if(user){
+    welcomeTxt.innerText = "Signed in: " + user.email;
+    sidebar-user.innerText = user.email;
+
+    if(user.email === "mithun@admin.com"){
+      document.querySelector('.sidebar').innerHTML += `
+        <button class="tab-button" data-tab="messages" onclick="switchTab('messages',this)">💬 Messages</button>
+      `;
     }
-    localStorage.setItem('cf_session', JSON.stringify(session));
-    updateSessionUI();
-    closeAuth();
-    injectMessagesTab();
-    alert('Logged in as ' + session.username);
-    return;
-  }
 
-  // If not found user
-  alert('No account found. Please create an account.');
-}
-
-function doLogout(){
-  if(confirm('Logout?')){
-    session = null; localStorage.removeItem('cf_session');
-    updateSessionUI(); removeMessagesTab();
-    switchTab('home');
-  }
-}
-
-function updateSessionUI(){
-  const w = document.getElementById('welcomeTxt');
-  const su = document.getElementById('sidebar-user');
-  const btn = document.getElementById('btn-login');
-  if(session && session.username){
-    w.textContent = 'Signed in as ' + session.username + (session.isAdmin ? ' (Admin)' : '');
-    su.textContent = session.username + (session.isAdmin ? ' • Admin' : '');
-    btn.textContent = 'Account';
-    btn.onclick = ()=> { openAuth(); };
+    loadChatList();
   } else {
-    w.textContent = 'Not signed in';
-    su.textContent = '—';
-    btn.textContent = 'Login / Signup';
-    btn.onclick = ()=> openAuth();
+    welcomeTxt.innerText = "Not signed in";
+    sidebar-user.innerText = "—";
   }
-}
-
-/* Ensure UI on load */
-updateSessionUI();
-if(session){ injectMessagesTab(); if(session.isAdmin) showAdminPanelTab(); }
-
-/* -------------------------
-   Message data functions
-   ------------------------- */
-// message object: { id, from, to, text, time }
-function sendMessageRaw(from, to, text){
-  const m = { id: 'm_' + Date.now() + '_' + Math.random().toString(36).slice(2,8), from, to, text, time: new Date().toISOString() };
-  messages.push(m);
-  saveStore('cf_messages', messages);
-  return m;
-}
-
-/* -------------------------
-   Messages UI (user & admin)
-   ------------------------- */
-
-function injectMessagesTab(){
-  // If already injected, do nothing
-  if(document.querySelector('[data-tab="messages-tab"]')) return;
-
-  // Add messages button in sidebar
-  const btn = document.createElement('button');
-  btn.className = 'tab-button';
-  btn.dataset.tab = 'messages';
-  btn.textContent = '💬 Messages';
-  btn.onclick = function(){ switchTab('messages', btn); };
-  btn.setAttribute('data-injected','1');
-
-  // insert before logout area: find sidebar and append
-  const sidebar = document.getElementById('sidebar');
-  // insert at top after existing city buttons
-  sidebar.insertBefore(btn, sidebar.querySelector('div') ); // before bottom user box
-}
-
-function removeMessagesTab(){
-  const node = Array.from(document.querySelectorAll('.tab-button')).find(b=>b.dataset.tab==='messages');
-  if(node) node.remove();
-}
-
-/* Build messages interface for current user */
-function buildMessagesUI(){
-  const wrap = document.getElementById('messages-wrap');
-  wrap.innerHTML = '';
-
-  if(!session){
-    wrap.innerHTML = '<div class="card">Please <b>Login / Signup</b> to use messaging.</div>';
-    return;
-  }
-
-  // If admin → show chats list & window (admin panel)
-  if(session.isAdmin){
-    buildAdminUI();
-    return;
-  }
-
-  // normal user — single chat between user and admin
-  const chatsList = document.createElement('div');
-  chatsList.className = 'chats-list card';
-  chatsList.style.minWidth = '280px';
-  const chatWindow = document.createElement('div');
-  chatWindow.className = 'chat-window';
-
-  // header
-  const header = document.createElement('div');
-  header.className = 'chat-header';
-  header.innerHTML = '<div style="font-weight:700">Chat with Admin</div><div class="small" style="margin-left:auto">You: ' + session.username + '</div>';
-  chatWindow.appendChild(header);
-
-  // messages container
-  const msgs = document.createElement('div');
-  msgs.className = 'messages';
-
-  // show conversation between session.username and admin ('Mithun')
-  const conv = messages.filter(m => (m.from === session.username && m.to === 'Mithun') || (m.from === 'Mithun' && m.to === session.username) );
-  conv.sort((a,b)=>new Date(a.time)-new Date(b.time));
-  conv.forEach(m=>{
-    const d = document.createElement('div');
-    d.className = 'msg ' + (m.from === session.username ? 'user' : 'admin');
-    d.innerHTML = `<div style="font-size:13px;color:#333">${escapeHtml(m.text)}</div><div class="small" style="margin-top:6px;color:#666">${new Date(m.time).toLocaleString()}</div>`;
-    msgs.appendChild(d);
-  });
-
-  chatWindow.appendChild(msgs);
-
-  // input
-  const inputRow = document.createElement('div');
-  inputRow.className = 'chat-input';
-  const input = document.createElement('input');
-  input.placeholder = 'Send message to admin (filters, questions...)';
-  const sendBtn = document.createElement('button');
-  sendBtn.textContent = 'Send';
-  sendBtn.onclick = ()=> {
-    const txt = (input.value||'').trim();
-    if(!txt) return;
-    sendMessageRaw(session.username, 'Mithun', txt);
-    saveStore('cf_messages', messages);
-    input.value = '';
-    buildMessagesUI();
-  };
-  inputRow.appendChild(input);
-  inputRow.appendChild(sendBtn);
-  chatWindow.appendChild(inputRow);
-
-  wrap.appendChild(chatsList);
-  wrap.appendChild(chatWindow);
-
-  // left side simple info
-  chatsList.innerHTML = `<div style="font-weight:700;padding-bottom:8px">Your Chat</div>
-    <div class="small">Messages are stored locally on your browser.</div>
-    <div style="margin-top:12px"><div style="font-weight:700">${session.username}</div><div class="small">Chat with Admin (Mithun)</div></div>`;
-}
-
-/* Admin UI: list all users & chats, open chat with any user */
-function buildAdminUI(){
-  const wrap = document.getElementById('messages-wrap') || document.getElementById('admin-wrap');
-  // clear
-  wrap.innerHTML = '';
-
-  // left: users list
-  const left = document.createElement('div');
-  left.className = 'chats-list card';
-  left.style.width = '320px';
-  left.style.minHeight = '60vh';
-
-  left.innerHTML = `<div style="font-weight:700;padding-bottom:8px">Users</div>`;
-
-  // show all user accounts except admin
-  const otherUsers = users.filter(u=>u.username !== 'Mithun');
-  otherUsers.forEach(u=>{
-    const userDiv = document.createElement('div');
-    userDiv.style.padding = '8px';
-    userDiv.style.borderBottom = '1px solid #f0f0f0';
-    userDiv.style.cursor = 'pointer';
-    userDiv.innerHTML = `<div style="font-weight:700">${u.username}</div><div class="small">DOB: ${u.dob || '—'}</div>`;
-    userDiv.onclick = ()=> openAdminChat(u.username);
-    left.appendChild(userDiv);
-  });
-
-  // right: two-column placeholder for chat window
-  const right = document.createElement('div');
-  right.className = 'chat-window';
-  right.style.flex = '1';
-
-  right.innerHTML = `<div class="chat-header"><div style="font-weight:700">Select a user to view messages</div></div>
-    <div style="padding:12px">Click a user on the left to open the conversation. You (Admin) will send messages to chosen user.</div>`;
-
-  wrap.appendChild(left);
-  wrap.appendChild(right);
-  document.getElementById('messages').style.display = 'block';
-  document.getElementById('admin-panel').style.display = 'none';
-}
-
-/* When admin clicks a user, open chat window to reply */
-function openAdminChat(username){
-  const wrap = document.getElementById('messages-wrap');
-  wrap.innerHTML = ''; // will re-build
-  const left = document.createElement('div');
-  left.className = 'chats-list card';
-  left.style.width = '320px';
-  left.style.minHeight = '60vh';
-  left.innerHTML = `<div style="font-weight:700;padding-bottom:8px">Users</div>`;
-  users.filter(u=>u.username !== 'Mithun').forEach(u=>{
-    const userDiv = document.createElement('div');
-    userDiv.style.padding = '8px';
-    userDiv.style.borderBottom = '1px solid #f0f0f0';
-    userDiv.style.cursor = 'pointer';
-    userDiv.innerHTML = `<div style="font-weight:700">${u.username}</div><div class="small">DOB: ${u.dob || '—'}</div>`;
-    userDiv.onclick = ()=> openAdminChat(u.username);
-    left.appendChild(userDiv);
-  });
-
-  const right = document.createElement('div');
-  right.className = 'chat-window';
-
-  // header
-  const header = document.createElement('div');
-  header.className = 'chat-header';
-  header.innerHTML = `<div style="font-weight:700">${username}</div><div class="small" style="margin-left:auto">Admin</div>`;
-  right.appendChild(header);
-
-  // messages
-  const msgs = document.createElement('div');
-  msgs.className = 'messages';
-  const conv = messages.filter(m => (m.from === username && m.to === 'Mithun') || (m.from === 'Mithun' && m.to === username) );
-  conv.sort((a,b)=>new Date(a.time)-new Date(b.time));
-  conv.forEach(m=>{
-    const d = document.createElement('div');
-    d.className = 'msg ' + (m.from === 'Mithun' ? 'admin' : 'user');
-    d.innerHTML = `<div style="font-size:13px;color:#333">${escapeHtml(m.text)}</div><div class="small" style="margin-top:6px;color:#666">${new Date(m.time).toLocaleString()}</div>`;
-    msgs.appendChild(d);
-  });
-  right.appendChild(msgs);
-
-  // input
-  const inputRow = document.createElement('div');
-  inputRow.className = 'chat-input';
-  const input = document.createElement('input');
-  input.placeholder = 'Reply to ' + username;
-  const sendBtn = document.createElement('button');
-  sendBtn.textContent = 'Send';
-  sendBtn.onclick = ()=> {
-    const txt = (input.value||'').trim();
-    if(!txt) return;
-    sendMessageRaw('Mithun', username, txt);
-    saveStore('cf_messages', messages);
-    openAdminChat(username); // refresh
-  };
-  inputRow.appendChild(input);
-  inputRow.appendChild(sendBtn);
-  right.appendChild(inputRow);
-
-  wrap.appendChild(left);
-  wrap.appendChild(right);
-  document.getElementById('messages').style.display = 'block';
-}
-
-/* Show admin panel tab in sidebar also */
-function showAdminPanelTab(){
-  // insert admin panel tab if not present
-  if(document.querySelector('[data-tab="admin-panel"]')) return;
-  const btn = document.createElement('button');
-  btn.className = 'tab-button';
-  btn.dataset.tab = 'admin-panel';
-  btn.textContent = '🛠 Admin';
-  btn.onclick = function(){ switchTab('admin-panel', btn); };
-  const sidebar = document.getElementById('sidebar');
-  // put admin button at top
-  sidebar.insertBefore(btn, sidebar.querySelector('.tab-button'));
-}
-
-/* -------------------------
-   Flipboards and View behavior
-   ------------------------- */
-
-/* static flipboard data for only the cities you asked */
-const FLIP_PREV = [
-  { city:'Chennai', title:'Engineering', link:'engineering_colleges_in_chennai.html' },
-  { city:'Chennai', title:'Medical', link:'medical_college_in_chennai.html' },
-  { city:'Chennai', title:'Arts & Science', link:'arts-science_college_chennai.html' },
-
-  { city:'Pondicherry', title:'Engineering', link:'engineering_pondy.html' },
-  { city:'Pondicherry', title:'Medical', link:'medical_pondyy.html' },
-  { city:'Pondicherry', title:'Arts & Science', link:'arts_pondy.html' },
-
-  { city:'Coimbatore', title:'Engineering', link:'engineering_coimbatore.html' },
-  { city:'Coimbatore', title:'Medical', link:'medical_college_coimbatore.html' },
-  { city:'Coimbatore', title:'Arts & Science', link:'arts_science_coimbatore.html' },
-
-  { city:'Trichy', title:'Engineering', link:'engineering-trichy.html' },
-  { city:'Trichy', title:'Medical', link:'medical-trichy.html' },
-  { city:'Trichy', title:'Arts & Science', link:'arts-and-science-trichy.html' },
-  { city:'Trichy', title:'Aviation', link:'aviation-trichy.html' },
-
-  { city:'Madurai', title:'Aviation', link:'aviaaon-maduur.html' },
-  { city:'Madurai', title:'Engineering', link:'engeerg-ma.html' }
-];
-
-function renderFlipboards(){
-  const grid = document.getElementById('flip-grid');
-  grid.innerHTML = '';
-  FLIP_PREV.forEach(item=>{
-    const div = document.createElement('div');
-    div.className = 'flip';
-    div.innerHTML = `<h3>${escapeHtml(item.city)}</h3><p>${escapeHtml(item.title)}</p>`;
-    const btn = document.createElement('button');
-    btn.className = 'view-btn';
-    btn.textContent = 'View';
-    btn.onclick = (e)=> {
-      e.stopPropagation();
-      if(!session){ openAuth(); return; }
-      // open link in new tab
-      window.open(item.link, '_blank');
-    };
-    div.appendChild(btn);
-    div.onclick = ()=> { // click card -> open city tab
-      const btns = Array.from(document.querySelectorAll('.tab-button')).find(b=>b.dataset.tab && b.dataset.tab.toLowerCase()===item.city.toLowerCase());
-      if(btns) btns.click();
-      else switchTab((item.city || 'home').toLowerCase());
-    };
-    grid.appendChild(div);
-  });
-}
-
-/* Populate city sections from colleges.json if present */
-async function loadCollegesJson(){
-  try{
-    const res = await fetch('colleges.json', {cache:'no-store'});
-    if(!res.ok) return;
-    const data = await res.json();
-    // for each city element id, render categories
-    ['chennai','pondy','coimbatore','trichy','madurai'].forEach(cityId=>{
-      const keyName = cityId === 'pondy' ? 'Pondicherry' : cityId.charAt(0).toUpperCase()+cityId.slice(1);
-      const container = document.getElementById(cityId+'-content');
-      if(!container) return;
-      container.innerHTML = '';
-      const cityObj = data[keyName] || {};
-      Object.keys(cityObj).forEach(cat=>{
-        const list = cityObj[cat];
-        const catCard = document.createElement('div');
-        catCard.className = 'card';
-        catCard.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><strong>${cat}</strong><div class="small">${list.length} colleges</div></div>`;
-        const ul = document.createElement('div');
-        ul.style.marginTop = '8px';
-        list.forEach(c=>{
-          // c can be either a string or object with details
-          if(typeof c === 'string'){
-            const row = document.createElement('div');
-            row.style.padding='8px';
-            row.style.borderBottom='1px solid #f0f0f0';
-            row.innerHTML = `<div style="font-weight:700">${escapeHtml(c)}</div><div class="small"> — click View for details</div>`;
-            const vbtn = document.createElement('button');
-            vbtn.className = 'btn';
-            vbtn.style.width='120px';
-            vbtn.style.marginTop='6px';
-            vbtn.textContent='View';
-            vbtn.onclick = (e)=>{ e.stopPropagation(); if(!session){ openAuth(); return; } alert('Open details page for: ' + c); };
-            row.appendChild(vbtn);
-            ul.appendChild(row);
-          } else {
-            const row = document.createElement('div');
-            row.style.padding='8px';
-            row.style.borderBottom='1px solid #f0f0f0';
-            row.innerHTML = `<div style="font-weight:700">${escapeHtml(c.name)}</div>
-              <div class="small">${escapeHtml(c.address || '')} • Fees: ${c.fees_per_year || '-'} • Cutoff: ${c.cutoff ? JSON.stringify(c.cutoff) : '-'}</div>`;
-            const vbtn = document.createElement('button');
-            vbtn.className = 'btn';
-            vbtn.style.width='120px';
-            vbtn.style.marginTop='6px';
-            vbtn.textContent='View';
-            vbtn.onclick = (e)=>{ e.stopPropagation(); if(!session){ openAuth(); return; } openCollegeDetail(c); };
-            row.appendChild(vbtn);
-            ul.appendChild(row);
-          }
-        });
-        catCard.appendChild(ul);
-        container.appendChild(catCard);
-      });
-    });
-  }catch(e){
-    // no colleges.json found — that's OK
-    console.warn('colleges.json not available or failed to load', e);
-  }
-}
-
-/* if object college has details, show popup with detail */
-function openCollegeDetail(c){
-  const content = `Name: ${c.name}\nAddress: ${c.address || '-'}\nCourses: ${Array.isArray(c.courses)?c.courses.join(', '): (c.courses||'-')}\nFees/year: ${c.fees_per_year || '-'}\nCutoff: ${c.cutoff ? JSON.stringify(c.cutoff) : '-'}\nWebsite: ${c.website || '-'}`;
-  alert(content);
-}
-
-/* -------------------------
-   Utilities
-   ------------------------- */
-function escapeHtml(s){ if(!s) return ''; return s.replace(/[&<>"']/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; }); }
-
-/* -------------------------
-   First render
-   ------------------------- */
-renderFlipboards();
-loadCollegesJson();
-
-/* Save on unload to be safe */
-window.addEventListener('beforeunload', ()=> {
-  saveStore('cf_users', users);
-  saveStore('cf_messages', messages);
 });
 
-/* Expose some debugging commands in console */
-window._CF = { users, messages, session, sendMessageRaw };
+/* ---------------- MESSAGES ----------------- */
+let currentChat = null;
 
-/* Helper to show admin panel if logged in after refresh */
-(function checkSessionAfterLoad(){
-  if(session){
-    updateSessionUI();
-    injectMessagesTab();
-    if(session.isAdmin) showAdminPanelTab();
-  }
-})();
+function loadChatList(){
+  db.ref("messages").on("value", snap=>{
+    let chats = snap.val() || {};
+    chatList.innerHTML = "";
+
+    Object.keys(chats).forEach(uid=>{
+      chatList.innerHTML += `
+        <div style="padding:10px;border-bottom:1px solid #eee;cursor:pointer"
+          onclick="openChat('${uid}')">
+          ${uid}
+        </div>
+      `;
+    });
+  });
+}
+
+function openChat(uid){
+  currentChat = uid;
+  chatHeader.innerHTML = `<strong>${uid}</strong>`;
+  loadMessages(uid);
+}
+
+function loadMessages(uid){
+  db.ref("messages/" + uid).on("value", snap=>{
+    let msgs = snap.val() || {};
+    chatMessages.innerHTML = "";
+
+    Object.keys(msgs).forEach(k=>{
+      let m = msgs[k];
+      let cls = (m.from === "admin") ? "admin" : "user";
+
+      chatMessages.innerHTML += `
+        <div class="msg ${cls}">${m.text}</div>
+      `;
+    });
+
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  });
+}
+
+function sendMessage(){
+  if(!currentChat) return;
+
+  db.ref("messages/" + currentChat).push({
+    from:"admin",
+    text: msgInput.value,
+    time: Date.now()
+  });
+
+  msgInput.value="";
+}
 </script>
 
 </body>
 </html>
+
+     
