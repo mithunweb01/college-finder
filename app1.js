@@ -1,5 +1,5 @@
 // app.js (module) — put in repo root next to index.html
-// Uses Firebase modular SDK via CDN imports
+// Uses Firebase modular SDK via CDN import
 
 // ----------------- FIREBASE IMPORTS (modular) -----------------
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
