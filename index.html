@@ -1,186 +1,618 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>College Finder</title>
   <link rel="canonical" href="https://mithunweb01.github.io/" />
-  <meta name="description" content="Find top engineering, medical, arts, and science colleges in Tamil Nadu.">
-  <meta name="keywords" content="Colleges in Chennai, Coimbatore, Pondicherry, Trichy, Madurai">
+  <meta name="description" content="Find top engineering, medical, arts, and science colleges in Chennai, Coimbatore, Pondicherry, Trichy, and Madurai.">
+  <meta name="keywords" content="Colleges in Chennai, Coimbatore, Pondicherry, Trichy, Madurai, Engineering Colleges, Medical Colleges, Arts and Science Colleges, Aviation Colleges, Tamil Nadu Colleges">
   <meta name="author" content="Mithun">
 
-  <!-- FIXED FAVICON -->
+  <!-- favicon (fixed) -->
   <link rel="icon" type="image/png" href="my-logo.png">
 
+  <!-- structured data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"College Finder",
+    "url":"https://mithunweb01.github.io/",
+    "publisher":{
+      "@type":"Organization",
+      "name":"College Finder",
+      "logo": { "@type":"ImageObject", "url":"https://mithunweb01.github.io/my-logo.png" }
+    }
+  }
+  </script>
+
   <style>
-    body{font-family:Arial;margin:0;background:#eef5ff}
-    header{display:flex;align-items:center;gap:10px;padding:10px;background:#fff;border-bottom:1px solid #ddd}
-    header img{height:45px;width:45px;border-radius:8px}
-    .container{display:flex;min-height:calc(100vh - 60px)}
-    .sidebar{width:230px;background:#003366;color:#fff;padding-top:10px;display:flex;flex-direction:column}
-    .tab-button{padding:12px;border:none;background:none;color:#fff;text-align:left;font-size:16px;cursor:pointer;border-left:4px solid transparent}
-    .tab-button.active{background:#0055aa;border-left:4px solid #ffcc00}
-    .content{flex:1;padding:20px;background:#f8fbff;overflow-y:auto}
+    :root{
+      --sidebar-width:230px; --accent:#ffcc00; --brand:#003366; --brand-2:#0055aa;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial, sans-serif;background:aliceblue;color:#333;-webkit-font-smoothing:antialiased}
+    header{display:flex;align-items:center;gap:12px;padding:10px 18px;background:#fff;border-bottom:1px solid #e6e6e6}
+    header img{height:44px;width:44px;border-radius:8px;object-fit:cover}
+    header h1{margin:0;font-size:20px;color:#003366}
 
-    /* POPUP */
-    #auth-popup{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);display:none;justify-content:center;align-items:center;z-index:999}
-    #auth-box{background:white;padding:20px;width:300px;border-radius:10px;text-align:center}
-    #auth-box input{width:90%;padding:8px;margin:6px 0;border:1px solid #aaa;border-radius:5px}
-    #auth-box button{padding:10px 14px;margin-top:8px;background:#003366;color:#fff;border:none;border-radius:6px;cursor:pointer;width:100%}
+    .container{display:flex;min-height:calc(100vh - 62px)}
+    .sidebar{
+      width:var(--sidebar-width);
+      min-width:170px;
+      background:var(--brand);
+      color:#fff;
+      display:flex;
+      flex-direction:column;
+      padding-top:10px;
+      position:sticky;
+      top:62px;
+      height:calc(100vh - 62px);
+      overflow-y:auto;
+      gap:6px;
+    }
+    .logo-wrap{padding:10px;text-align:center}
+    .logo-wrap img{height:52px;width:52px;border-radius:8px}
+    .tab-button{
+      padding:12px 16px;text-align:left;border:none;background:none;color:#fff;font-size:15px;cursor:pointer;width:100%;border-left:4px solid transparent;transition:0.18s;
+    }
+    .tab-button:hover,.tab-button.active{background:var(--brand-2);border-left:4px solid var(--accent)}
 
-    /* SUPPORT CHAT */
-    #support-box{max-width:700px;margin:auto}
-    #chat-window{height:350px;background:#fff;border:1px solid #ccc;border-radius:8px;padding:10px;overflow-y:auto;margin-bottom:10px}
-    #chat-window .msg{padding:6px 10px;margin:6px 0;border-radius:6px;max-width:80%}
-    .user-msg{background:#d9eaff;margin-left:auto}
-    .ai-msg{background:#ffe9a8;margin-right:auto}
-    #support-box input{width:100%;padding:10px;border-radius:6px;border:1px solid #aaa}
+    .content{flex:1;padding:20px;overflow-y:auto}
+    .page-title{text-align:center;color:darkred;font-size:30px;margin:6px 0}
+    .lead{text-align:center;font-size:16px;color:#222;max-width:900px;margin:6px auto 20px}
 
-    /* HOME LOGIN INFO */
-    #after-login-msg{display:none;background:#fff4c4;padding:10px;border-radius:8px}
+    /* flip cards */
+    #flip-board{background:#f5f7fb;padding:18px;border-radius:10px;margin-top:18px;max-width:1100px;margin-left:auto;margin-right:auto}
+    .flip-board{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+    .flip-card{width:220px;height:140px;perspective:900px}
+    .flip-card-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d;border-radius:10px}
+    .flip-card:hover .flip-card-inner{transform:rotateY(180deg)}
+    .flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;border-radius:10px;backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:8px}
+    .flip-card-front{background:linear-gradient(135deg,#fff,#dbe9ff);color:var(--brand);font-weight:700;text-align:center}
+    .flip-card-back{background:#0066cc;color:#fff;transform:rotateY(180deg);text-align:center}
+    .flip-card-back a{color:#333;background:var(--accent);padding:6px 10px;border-radius:6px;text-decoration:none;font-weight:700}
 
+    /* login modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:none;align-items:center;justify-content:center;z-index:2000}
+    .modal{background:#fff;padding:18px;border-radius:10px;max-width:420px;width:94%;box-shadow:0 8px 30px rgba(0,0,0,0.2)}
+    .modal h3{margin-top:0}
+    .modal label{display:block;margin:8px 0 4px;font-weight:600}
+    .modal input{width:100%;padding:8px;border-radius:6px;border:1px solid #ddd}
+    .row{display:flex;gap:8px;margin-top:12px}
+    .btn{display:inline-block;padding:8px 12px;border-radius:6px;border:none;cursor:pointer}
+    .btn-primary{background:var(--brand);color:#fff}
+    .btn-muted{background:#f1f1f1;color:#333}
+
+    /* support chat */
+    #support-box{max-width:900px;margin:auto}
+    .chat-window{height:360px;background:#fff;border:1px solid #e6e6e6;border-radius:10px;padding:12px;overflow:auto}
+    .bubble{display:inline-block;padding:10px 12px;border-radius:12px;margin:8px 0;max-width:80%}
+    .bubble.user{background:#dbe9ff;margin-left:auto}
+    .bubble.ai{background:#fff3cc;margin-right:auto}
+    .college-card{border:1px solid #e1e1e1;padding:10px;border-radius:8px;margin:8px 0;background:#fff}
+    .typing{font-style:italic;color:#666;margin:8px 0}
+
+    footer{ text-align:center;padding:14px;color:#666;border-top:1px solid #eee;background:#fafafa }
+
+    /* responsive mobile: convert sidebar to horizontal top bar */
+    @media (max-width: 768px) {
+      .container{flex-direction:column}
+      .sidebar{
+        position:relative;
+        top:0;
+        height:auto;
+        width:100%;
+        display:flex;
+        flex-direction:row;
+        gap:6px;
+        padding:8px;
+        overflow-x:auto;
+        align-items:center;
+      }
+      .tab-button{flex:0 0 auto;padding:10px 12px;border-left:none;border-bottom:4px solid transparent}
+      .tab-button.active{border-bottom:4px solid var(--accent)}
+      .logo-wrap{display:none}
+    }
   </style>
 </head>
 <body>
+  <header>
+    <img src="my-logo.jpg" alt="College Finder logo">
+    <h1>College Finder</h1>
+  </header>
 
-<header>
-  <img src="my-logo.png">
-  <h1>College Finder</h1>
-</header>
+  <div class="container">
+    <nav class="sidebar" aria-label="Primary navigation" id="sidebar">
+      <div class="logo-wrap"><img src="my-logo.jpg" alt="Logo"></div>
+      <button class="tab-button active" onclick="showTab('home', event)" aria-current="page">🏠 Home</button>
+      <button class="tab-button" onclick="requireAuth('chennai', event)">Chennai</button>
+      <button class="tab-button" onclick="requireAuth('pondy', event)">Pondicherry</button>
+      <button class="tab-button" onclick="requireAuth('coimbatore', event)">Coimbatore</button>
+      <button class="tab-button" onclick="requireAuth('trichy', event)">Trichy</button>
+      <button class="tab-button" onclick="requireAuth('madurai', event)">Madurai</button>
+      <div style="flex:1"></div>
+      <div id="user-badge" style="padding:10px;color:#fff;font-size:13px">Not signed in</div>
+    </nav>
 
-<div id="auth-popup"><div id="auth-box">
-  <h3 id="auth-title">Login</h3>
-  <input id="username" placeholder="Username">
-  <input id="dob" type="date" placeholder="DOB">
-  <button onclick="submitAuth()">Continue</button>
-</div></div>
+    <main class="content" id="main-content" tabindex="-1">
+      <section id="home" class="tab-content" style="display:block;">
+        <h1 class="page-title">Welcome to College Finder</h1>
+        <p class="lead">This site shows top colleges in popular cities in Tamil Nadu. Click View on any card to open the full list (you will be asked to sign in first).</p>
 
-<div class="container">
-  <nav class="sidebar" id="sidebar">
-    <button class="tab-button active" onclick="openTab('home',event)">🏠 Home</button>
-    <button class="tab-button" onclick="requireLogin('chennai',event)">Chennai</button>
-    <button class="tab-button" onclick="requireLogin('pondy',event)">Pondicherry</button>
-    <button class="tab-button" onclick="requireLogin('coimbatore',event)">Coimbatore</button>
-    <button class="tab-button" onclick="requireLogin('trichy',event)">Trichy</button>
-    <button class="tab-button" onclick="requireLogin('madurai',event)">Madurai</button>
-  </nav>
+        <div id="flip-board" aria-labelledby="flip-title">
+          <h2 id="flip-title" style="text-align:center;margin-top:0;color:darkred">Explore All Colleges Quickly</h2>
 
-  <main class="content">
-    <section id="home" class="tab-content" style="display:block;">
-      <h1>Welcome to College Finder</h1>
-      <p id="after-login-msg">🎉 You are logged in! Use the new <b>Support</b> tab to chat with AI and find colleges quickly.</p>
-    </section>
+          <div class="flip-board" id="flipboard-area">
+            <!-- We'll generate 15 flip-cards (Engineering / Medical / Arts) for 5 cities -->
+          </div>
+        </div>
+      </section>
 
-    <section id="support" class="tab-content" style="display:none;"></section>
+      <!-- City pages (these are the target pages that View links point to) -->
+      <section id="chennai" class="tab-content" style="display:none;">
+        <h2 style="text-align:center;color:darkred">Chennai</h2>
+        <ul>
+          <li><a href="engineering_colleges_in_chennai.html">Top 5 Engineering Colleges</a></li>
+          <li><a href="medical_college_in_chennai.html">Top 5 Medical Colleges</a></li>
+          <li><a href="arts-science_college_chennai.html">Top 5 Arts & Science Colleges</a></li>
+        </ul>
+      </section>
 
-    <section id="chennai" class="tab-content" style="display:none;">Chennai List</section>
-    <section id="pondy" class="tab-content" style="display:none;">Pondy List</section>
-    <section id="coimbatore" class="tab-content" style="display:none;">Coimbatore List</section>
-    <section id="trichy" class="tab-content" style="display:none;">Trichy List</section>
-    <section id="madurai" class="tab-content" style="display:none;">Madurai List</section>
+      <section id="pondy" class="tab-content" style="display:none;">
+        <h2 style="text-align:center;color:darkred">Pondicherry</h2>
+        <ul>
+          <li><a href="engineering_pondy.html">Top 5 Engineering Colleges</a></li>
+          <li><a href="medical_pondyy.html">Top 5 Medical Colleges</a></li>
+          <li><a href="arts_pondy.html">Top 5 Arts & Science Colleges</a></li>
+        </ul>
+      </section>
 
-  </main>
-</div>
+      <section id="coimbatore" class="tab-content" style="display:none;">
+        <h2 style="text-align:center;color:darkred">Coimbatore</h2>
+        <ul>
+          <li><a href="engineering_coimbatore.html">Top 5 Engineering Colleges</a></li>
+          <li><a href="medical_college_coimbatore.html">Top 5 Medical Colleges</a></li>
+          <li><a href="arts_science_coimbatore.html">Top 5 Arts & Science Colleges</a></li>
+        </ul>
+      </section>
 
-<script>
-let loggedIn = false;
+      <section id="trichy" class="tab-content" style="display:none;">
+        <h2 style="text-align:center;color:darkred">Trichy</h2>
+        <ul>
+          <li><a href="engineering-trichy.html">Top 5 Engineering Colleges</a></li>
+          <li><a href="medical-trichy.html">Top 5 Medical Colleges</a></li>
+          <li><a href="arts-and-science-trichy.html">Top 5 Arts & Science Colleges</a></li>
+          <li><a href="aviation-trichy.html">Top 5 Aviation Colleges</a></li>
+        </ul>
+      </section>
 
-function requireLogin(tab,event){
-  if(!loggedIn){ event.preventDefault(); showPopup(); return; }
-  openTab(tab,event);
-}
+      <section id="madurai" class="tab-content" style="display:none;">
+        <h2 style="text-align:center;color:darkred">Madurai</h2>
+        <ul>
+          <li><a href="aviaaon-maduur.html">Top 5 Aviation Colleges</a></li>
+          <li><a href="engeerg-ma.html">Top 5 Engineering Colleges</a></li>
+        </ul>
+      </section>
 
-function showPopup(){ document.getElementById("auth-popup").style.display="flex"; }
+      <!-- Support tab (injected when user logs in) -->
+      <section id="support" class="tab-content" style="display:none;"></section>
+    </main>
+  </div>
 
-function submitAuth(){
-  let u = document.getElementById("username").value.trim();
-  let d = document.getElementById("dob").value.trim();
-  if(!u || !d){ alert("Enter all details"); return; }
+  <!-- Auth modal (used for both sidebar and flip-card clicks) -->
+  <div class="modal-backdrop" id="auth-backdrop" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+    <div class="modal" id="auth-modal">
+      <h3 id="auth-title">Sign in to continue</h3>
 
-  loggedIn = true;
-  document.getElementById("auth-popup").style.display="none";
-  document.getElementById("after-login-msg").style.display="block";
+      <div id="auth-tabs" style="margin-bottom:8px">
+        <button class="btn btn-muted" id="show-login-btn" aria-pressed="true">Login</button>
+        <button class="btn btn-muted" id="show-register-btn" aria-pressed="false" style="margin-left:8px">Register</button>
+      </div>
 
-  createSupportTab();
-}
+      <div id="login-form" style="margin-top:6px">
+        <label for="login-username">Username</label>
+        <input id="login-username" type="text" autocomplete="username">
+        <label for="login-dob">Date of birth</label>
+        <input id="login-dob" type="date" autocomplete="bday">
+        <label for="login-password">Password</label>
+        <input id="login-password" type="password" autocomplete="current-password" placeholder="Password">
+        <div class="row" style="justify-content:flex-end">
+          <button class="btn btn-primary" id="login-btn">Login</button>
+        </div>
+        <div style="margin-top:8px;font-size:13px;color:#666">No account? Click <strong>Register</strong>.</div>
+      </div>
 
-function createSupportTab(){
-  if(document.getElementById("support-btn")) return;
+      <div id="register-form" style="display:none;margin-top:12px">
+        <label for="reg-username">Choose a username</label>
+        <input id="reg-username" type="text">
+        <label for="reg-dob">Date of birth</label>
+        <input id="reg-dob" type="date">
+        <label for="reg-password">Choose a password</label>
+        <input id="reg-password" type="password" placeholder="Create a password">
+        <div class="row" style="justify-content:flex-end">
+          <button class="btn btn-primary" id="register-btn">Create account</button>
+        </div>
+      </div>
 
-  let btn = document.createElement("button");
-  btn.id = "support-btn";
-  btn.className = "tab-button";
-  btn.textContent = "💬 Support";
-  btn.onclick = (e)=>openTab('support',e);
-  document.getElementById("sidebar").appendChild(btn);
+    </div>
+  </div>
 
-  document.getElementById("support").innerHTML = `
-    <div id='support-box'>
-      <h2>AI Support</h2>
-      <div id='chat-window'></div>
-      <input id='chat-input' placeholder='Ask about any college...' onkeydown="if(event.key==='Enter') sendMsg()">
-    </div>`;
-}
+  <footer>© 2025 College Finder • Built by Mithun</footer>
 
-function openTab(t,event){
-  document.querySelectorAll('.tab-content').forEach(x=>x.style.display='none');
-  document.querySelectorAll('.tab-button').forEach(x=>x.classList.remove('active'));
-  if(event) event.currentTarget.classList.add('active');
-  document.getElementById(t).style.display='block';
-}
+  <script>
+  /* -------------------------
+     Simple client-side account store
+     (localStorage). Admin account omitted here
+     because you already asked all users to get Support.
+     ------------------------- */
+  const USERS_KEY = 'cf_users_v_final';
+  const CURRENT_KEY = 'cf_current_v_final';
 
-function sendMsg(){
-  let input = document.getElementById('chat-input');
-  let txt = input.value.trim(); if(!txt) return;
+  // init with empty object if missing
+  (function initUsers(){
+    if(!localStorage.getItem(USERS_KEY)){
+      // create a default admin (optional) - you can remove this if not needed
+      const u = {
+        "Mithun": { username:"Mithun", dob:"2014-11-15", password:"admin123", role:"admin" }
+      };
+      localStorage.setItem(USERS_KEY, JSON.stringify(u));
+    }
+  })();
 
-  let win = document.getElementById('chat-window');
-  win.innerHTML += `<div class='msg user-msg'>${txt}</div>`;
+  function getUsers(){ return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); }
+  function saveUsers(o){ localStorage.setItem(USERS_KEY, JSON.stringify(o)); }
+  function setCurrent(u){ localStorage.setItem(CURRENT_KEY, JSON.stringify(u)); updateUserBadge(); }
+  function getCurrent(){ return JSON.parse(localStorage.getItem(CURRENT_KEY) || 'null'); }
+  function clearCurrent(){ localStorage.removeItem(CURRENT_KEY); updateUserBadge(); }
 
-  let reply = getAIReply(txt);
-  win.innerHTML += `<div class='msg ai-msg'>${reply}</div>`;
-  input.value="";
-  win.scrollTop = win.scrollHeight;
-}
+  // UI elements
+  const authBackdrop = document.getElementById('auth-backdrop');
+  const loginForm = document.getElementById('login-form');
+  const registerForm = document.getElementById('register-form');
+  const showLoginBtn = document.getElementById('show-login-btn');
+  const showRegisterBtn = document.getElementById('show-register-btn');
+  const loginBtn = document.getElementById('login-btn');
+  const registerBtn = document.getElementById('register-btn');
+  const userBadge = document.getElementById('user-badge');
 
-// === AI LOGIC WITH FILTERS ===
-function getAIReply(q){
-  q = q.toLowerCase();
-
-  const colleges = [
-    {name:"IIT Madras", course:"engineering", city:"chennai", cutoff:95, fees:200000, trust:5},
-    {name:"SSN College", course:"engineering", city:"chennai", cutoff:85, fees:160000, trust:5},
-    {name:"CIT", course:"engineering", city:"coimbatore", cutoff:80, fees:130000, trust:4},
-    {name:"PSG Tech", course:"engineering", city:"coimbatore", cutoff:90, fees:175000, trust:5},
-    {name:"MMC Chennai", course:"medical", city:"chennai", cutoff:92, fees:250000, trust:5},
-    {name:"JIPMER", course:"medical", city:"pondicherry", cutoff:96, fees:210000, trust:5},
-    {name:"Stanley Medical College", course:"medical", city:"chennai", cutoff:91, fees:190000, trust:5},
-    {name:"Loyola College", course:"arts", city:"chennai", cutoff:78, fees:85000, trust:5},
-    {name:"MCC", course:"arts", city:"chennai", cutoff:75, fees:90000, trust:5},
-    {name:"PSG CAS", course:"arts", city:"coimbatore", cutoff:72, fees:80000, trust:4}
-  ];
-
-  // FILTERING
-  let results = colleges.filter(c => (
-    q.includes(c.course) ||
-    q.includes(c.city) ||
-    q.includes("low fees") && c.fees < 100000 ||
-    q.includes("high trust") && c.trust >= 5 ||
-    q.includes("low cutoff") && c.cutoff < 80 ||
-    q.includes("top") && c.trust >= 5
-  ));
-
-  if(results.length === 0){
-    return "No exact matches found. Try asking: 'top engineering colleges in Chennai'";
-  }
-
-  let reply = "Here are the best matches:<br><br>";
-  results.slice(0,5).forEach((c,i)=>{
-    reply += `${i+1}. <b>${c.name}</b> — ${c.course} — ${c.city}<br>Cutoff: ${c.cutoff}% | Fees: ₹${c.fees} | Trust: ${c.trust}/5<br><br>`;
+  // toggle login/register in modal
+  showLoginBtn.addEventListener('click', ()=>{
+    loginForm.style.display='block'; registerForm.style.display='none';
+    showLoginBtn.setAttribute('aria-pressed','true'); showRegisterBtn.setAttribute('aria-pressed','false');
+  });
+  showRegisterBtn.addEventListener('click', ()=>{
+    loginForm.style.display='none'; registerForm.style.display='block';
+    showLoginBtn.setAttribute('aria-pressed','false'); showRegisterBtn.setAttribute('aria-pressed','true');
   });
 
-  return reply;
-}
-</script>
+  // open auth modal (target is reserved navigation target e.g. {href:'...'} )
+  let intendedNav = null;
+  function openAuthModal(target){
+    intendedNav = target || null;
+    authBackdrop.style.display = 'flex';
+    // default to login view
+    loginForm.style.display='block'; registerForm.style.display='none';
+    showLoginBtn.setAttribute('aria-pressed','true'); showRegisterBtn.setAttribute('aria-pressed','false');
+    document.getElementById('login-username').focus();
+  }
+  function closeAuthModal(){ authBackdrop.style.display = 'none'; }
 
+  // register handler
+  registerBtn.addEventListener('click', function(){
+    const u = (document.getElementById('reg-username').value || '').trim();
+    const d = (document.getElementById('reg-dob').value || '').trim();
+    const p = (document.getElementById('reg-password').value || '').trim();
+    if(!u || !d || !p){ alert('Fill all fields'); return; }
+    const users = getUsers();
+    if(users[u]){ alert('Username exists'); return; }
+    users[u] = { username:u, dob:d, password:p, role:'user' };
+    saveUsers(users);
+    setCurrent(users[u]);
+    alert('Account created and signed in as ' + u);
+    closeAuthModal();
+    onLoginChange();
+  });
+
+  // login handler
+  loginBtn.addEventListener('click', function(){
+    const u = (document.getElementById('login-username').value || '').trim();
+    const d = (document.getElementById('login-dob').value || '').trim();
+    const p = (document.getElementById('login-password').value || '').trim();
+    if(!u || !d || !p){ alert('Please enter username, DOB and password'); return; }
+    const users = getUsers();
+    if(users[u] && users[u].dob === d && users[u].password === p){
+      setCurrent(users[u]);
+      closeAuthModal();
+      onLoginChange();
+    } else {
+      alert('Invalid credentials');
+    }
+  });
+
+  // close when clicking backdrop
+  authBackdrop.addEventListener('click', function(e){
+    if(e.target === authBackdrop) closeAuthModal();
+  });
+  window.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAuthModal(); });
+
+  // update user badge
+  function updateUserBadge(){
+    const cur = getCurrent();
+    if(cur && cur.username){
+      userBadge.textContent = 'Signed in: ' + cur.username + (cur.role ? (cur.role==='admin' ? ' (admin)' : '') : '');
+    } else {
+      userBadge.textContent = 'Not signed in';
+    }
+  }
+
+  // called after login/register
+  function onLoginChange(){
+    // inject support tab for all signed-in users
+    injectSupportTab();
+    // if there was an intendedNav (from a flip-card or protected link), go to it
+    if(intendedNav){
+      // if target is href, navigate there
+      if(intendedNav.href){
+        window.location.href = intendedNav.href;
+      } else if(intendedNav.tab){
+        showTab(intendedNav.tab);
+      }
+      intendedNav = null;
+    }
+  }
+
+  // protect sidebar tabs (openAuthModal if not logged in)
+  function requireAuth(tab, ev){
+    const cur = getCurrent();
+    if(cur && cur.username){ showTab(tab, ev); return; }
+    if(ev) ev.preventDefault();
+    openAuthModal({tab: tab});
+  }
+
+  // attach protection to flip-card view links
+  // We'll also set up dynamic generation of flipcards below
+  function flipClickHandler(e, href){
+    const cur = getCurrent();
+    if(cur && cur.username){ return true; } // allow default navigation
+    e.preventDefault();
+    // remember intended href then open login modal
+    openAuthModal({href: href});
+    return false;
+  }
+
+  // tab switching function
+  function showTab(tabId, ev){
+    document.querySelectorAll('.tab-content').forEach(function(t){ t.style.display='none'; });
+    document.querySelectorAll('.tab-button').forEach(function(b){ b.classList.remove('active'); b.removeAttribute('aria-current'); });
+    var target = document.getElementById(tabId);
+    if (target) target.style.display='block';
+    if (ev && ev.currentTarget) { ev.currentTarget.classList.add('active'); ev.currentTarget.setAttribute('aria-current','page'); try{ ev.currentTarget.focus(); }catch(e){} }
+    var main = document.getElementById('main-content'); if (main) main.focus();
+  }
+
+  // inject Support tab (for any signed in user)
+  let supportInjected = false;
+  function injectSupportTab(){
+    if(supportInjected) return;
+    supportInjected = true;
+    // create button
+    const btn = document.createElement('button');
+    btn.className = 'tab-button';
+    btn.textContent = '💬 Support';
+    btn.onclick = function(e){ showTab('support', e); };
+    // insert before flexible spacer (we have spacer as 2nd-last element)
+    const sidebar = document.getElementById('sidebar');
+    sidebar.insertBefore(btn, sidebar.children[sidebar.children.length-2] || null);
+
+    // fill support area
+    const support = document.getElementById('support');
+    support.innerHTML = `
+      <div id="support-box">
+        <h2 style="text-align:center;color:darkred">Support — College AI</h2>
+        <div style="max-width:900px;margin:10px auto">
+          <div class="chat-window" id="chat-window" aria-live="polite"></div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <input id="chat-query" placeholder="Ask e.g. 'engineering colleges in Chennai under 200000 cutoff below 92' " style="flex:1;padding:10px;border-radius:6px;border:1px solid #ddd">
+            <button class="btn btn-primary" id="chat-send">Ask</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // basic chat logic (small dataset)
+    const COLLEGES = [
+      { name: "IIT Madras", course: "engineering", city: "chennai", fees: 250000, cutoff:98, trust:5 },
+      { name: "PSG College of Technology", course: "engineering", city: "coimbatore", fees:160000, cutoff:92, trust:5 },
+      { name: "MMC Chennai", course: "medical", city: "chennai", fees:120000, cutoff:96, trust:5 },
+      { name: "JIPMER", course: "medical", city: "pondicherry", fees:90000, cutoff:97, trust:5 },
+      { name: "Loyola College", course: "arts", city: "chennai", fees:60000, cutoff:85, trust:4 }
+    ];
+
+    const chatWindow = document.getElementById('chat-window');
+    const chatSend = document.getElementById('chat-send');
+    const chatQuery = document.getElementById('chat-query');
+
+    function appendBubble(text, who='ai', html=false){
+      const d = document.createElement('div');
+      d.className = 'bubble ' + (who==='user' ? 'user' : 'ai');
+      if(html) d.innerHTML = text; else d.textContent = text;
+      chatWindow.appendChild(d);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+    function appendTyping(){
+      const t = document.createElement('div'); t.className='typing'; t.id='typing-ind';
+      t.textContent = 'AI is typing...'; chatWindow.appendChild(t); chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+    function removeTyping(){ const t = document.getElementById('typing-ind'); if(t) t.remove(); }
+
+    function parseAndFind(q){
+      q = q.toLowerCase();
+      const courseWords = ['engineering','medical','arts','aviation'];
+      let courseFilter = courseWords.find(c=>q.includes(c)) || null;
+      const cities = ['chennai','coimbatore','pondicherry','trichy','madurai','pondy'];
+      let cityFilter = cities.find(c=>q.includes(c)) || null;
+      const feeMatch = q.match(/(under|below)\\s*(\\d+[\\d,]*)/);
+      let feeLimit = feeMatch ? parseInt(feeMatch[2].replace(/,/g,''),10) : null;
+      const cutMatch = q.match(/cut\\s*[-]?\\s*off\\s*(?:below|under)?\\s*(\\d{1,3})/);
+      let cutoffLimit = cutMatch ? parseInt(cutMatch[1],10) : null;
+      const trustHigh = q.includes('high trust') || q.includes('trusted') || q.includes('highly trusted');
+      const lowFees = q.includes('low fees') || q.includes('cheap') || q.includes('affordable');
+
+      let results = COLLEGES.filter(c=>{
+        let ok = true;
+        if(courseFilter) ok = ok && (c.course.indexOf(courseFilter) !== -1);
+        if(cityFilter) ok = ok && (c.city.indexOf(cityFilter) !== -1 || (cityFilter==='pondy' && c.city==='pondicherry'));
+        if(feeLimit !== null) ok = ok && (c.fees <= feeLimit);
+        if(cutoffLimit !== null) ok = ok && (c.cutoff <= cutoffLimit || c.cutoff >= cutoffLimit); // flexible
+        if(trustHigh) ok = ok && (c.trust >= 4);
+        if(lowFees) ok = ok && (c.fees <= 100000);
+        return ok;
+      });
+
+      if(results.length === 0) results = COLLEGES.slice(0,5);
+      return results.slice(0,5);
+    }
+
+    function formatCollegeHtml(c){
+      return `<div class="college-card">
+        <strong>${c.name}</strong><br>
+        Course: ${c.course.charAt(0).toUpperCase()+c.course.slice(1)}<br>
+        City: ${c.city.charAt(0).toUpperCase()+c.city.slice(1)}<br>
+        Fees/year: ₹${c.fees.toLocaleString()}<br>
+        Cut-off (approx): ${c.cutoff}<br>
+        Trustability: ${c.trust}/5
+      </div>`;
+    }
+
+    function handleQuery(q){
+      appendBubble(q,'user');
+      appendTyping();
+      setTimeout(()=>{
+        removeTyping();
+        const matches = parseAndFind(q);
+        let html = '<div><strong>Here are colleges matching your filters:</strong></div><br>';
+        matches.forEach(c=> html += formatCollegeHtml(c));
+        appendBubble(html,'ai',true);
+      }, 700 + Math.random()*600);
+    }
+
+    chatSend.addEventListener('click', function(){ const v = chatQuery.value.trim(); if(!v) return; handleQuery(v); chatQuery.value=''; });
+    chatQuery.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); chatSend.click(); } });
+  }
+
+  // handle login/logout UI on load
+  (function initial(){
+    updateUserBadge();
+    generateFlipCards();
+    // if already signed in (persisted), inject support
+    const cur = getCurrent();
+    if(cur && cur.username) injectSupportTab();
+  })();
+
+  function generateFlipCards(){
+    const area = document.getElementById('flipboard-area');
+    if(!area) return;
+    area.innerHTML = ''; // clear
+
+    const categories = [
+      { key:'engineering', title:'Engineering', links:{
+        chennai:'engineering_colleges_in_chennai.html',
+        coimbatore:'engineering_coimbatore.html',
+        pondicherry:'engineering_pondy.html',
+        trichy:'engineering-trichy.html',
+        madurai:'engeerg-ma.html'
+      }},
+      { key:'medical', title:'Medical', links:{
+        chennai:'medical_college_in_chennai.html',
+        coimbatore:'medical_college_coimbatore.html',
+        pondicherry:'medical_pondyy.html',
+        trichy:'medical-trichy.html',
+        madurai:'(no-link)' // placeholder if none
+      }},
+      { key:'arts', title:'Arts & Science', links:{
+        chennai:'arts-science_college_chennai.html',
+        coimbatore:'arts_science_coimbatore.html',
+        pondicherry:'arts_pondy.html',
+        trichy:'arts-and-science-trichy.html',
+        madurai:'(no-link)'
+      }}
+    ];
+
+    const cities = [
+      {id:'chennai', label:'Chennai'},
+      {id:'coimbatore', label:'Coimbatore'},
+      {id:'pondicherry', label:'Pondicherry'},
+      {id:'trichy', label:'Trichy'},
+      {id:'madurai', label:'Madurai'}
+    ];
+
+    categories.forEach(cat=>{
+      cities.forEach(city=>{
+        const href = cat.links[city.id] || cat.links[city.id==='pondicherry'?'pondicherry':city.id] || '#';
+        // create card
+        const card = document.createElement('div');
+        card.className = 'flip-card';
+        card.innerHTML = `
+          <div class="flip-card-inner">
+            <div class="flip-card-front">${city.label} – ${cat.title}</div>
+            <div class="flip-card-back">
+              <h3>Top ${cat.title}</h3>
+              <a href="${href}" class="flip-view-link">View</a>
+            </div>
+          </div>
+        `;
+        area.appendChild(card);
+      });
+    });
+
+    // attach click handlers to view links to enforce login
+    document.querySelectorAll('.flip-view-link').forEach(a=>{
+      a.addEventListener('click', function(e){
+        const href = a.getAttribute('href') || '#';
+        // if href is placeholder like (no-link) or #, do nothing except login check
+        if(href === '(no-link)') {
+          e.preventDefault();
+          if(!getCurrent()){ openAuthModal({href:null}); } else { alert('No page available yet'); }
+          return;
+        }
+        // check login; if not logged, open auth modal and remember href
+        const cur = getCurrent();
+        if(cur && cur.username){
+          // allow default navigation
+          return true;
+        } else {
+          e.preventDefault();
+          openAuthModal({href: href});
+          return false;
+        }
+      });
+    });
+  }
+
+  // utility: getCurrent defined above; updateUserBadge defined above but let's implement update:
+  function updateUserBadge(){
+    const cur = getCurrent();
+    if(cur && cur.username){
+      userBadge.textContent = 'Signed in: ' + cur.username + (cur.role ? (cur.role==='admin' ? ' (admin)' : '') : '');
+    } else {
+      userBadge.textContent = 'Not signed in';
+    }
+  }
+
+  // handle arrow navigation on desktop (optional)
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
+      const tabs = Array.from(document.querySelectorAll('.tab-button'));
+      const activeIndex = tabs.findIndex(t=>t.classList.contains('active'));
+      if(activeIndex === -1) return;
+      let next = (e.key==='ArrowRight') ? activeIndex+1 : activeIndex-1;
+      if(next < 0) next = tabs.length-1; if(next >= tabs.length) next = 0;
+      tabs[next].click();
+    }
+  });
+
+  </script>
 </body>
 </html>
