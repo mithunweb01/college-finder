@@ -42,14 +42,51 @@
     .chat-input button{padding:10px 14px;border-radius:8px;border:none;background:var(--brand);color:#fff;cursor:pointer}
     input[type="email"], input[type="password"], input[type="text"], input[type="date"]{width:100%;padding:8px;margin:6px 0;border-radius:6px;border:1px solid #ccc}
     .small{font-size:13px;color:#666}
-    @media(max-width:900px){
-      .wrap{flex-direction:column;padding:0 10px}
-      .sidebar{width:100%;display:flex;overflow-x:auto;gap:8px}
-      .tab-button{flex:0 0 auto;padding:8px 12px;border-left:none;border-bottom:4px solid transparent}
-      .tab-button.active{border-bottom:4px solid var(--accent)}
-      #messages-wrap{flex-direction:column;height:60vh}
-      .chats-list{width:100%}
-    }
+   @media(max-width:900px){
+  .wrap{
+    flex-direction:column;
+    padding:0 10px;
+    margin-top:10px; /* prevents overlapping under header */
+  }
+
+  .sidebar{
+    width:100%;
+    display:flex;
+    overflow-x:auto;
+    gap:4px;                 /* smaller gaps */
+    padding:6px;             /* smaller padding */
+    min-height:auto;         /* no tall bar */
+    background:var(--brand);
+    border-radius:8px;
+  }
+
+  .sidebar .logo{
+    display:none;            /* hide logo to save space */
+  }
+
+  .tab-button{
+    flex:0 0 auto;
+    padding:6px 10px;       /* smaller button */
+    font-size:13px;         /* smaller text */
+    border-left:none;
+    border-bottom:3px solid transparent;
+    white-space:nowrap;     /* keeps text in one line */
+  }
+
+  .tab-button.active{
+    border-bottom:3px solid var(--accent);
+  }
+
+  #messages-wrap{
+    flex-direction:column;
+    height:60vh;
+  }
+
+  .chats-list{
+    width:100%;
+  }
+}
+
   </style>
 </head>
 <body>
