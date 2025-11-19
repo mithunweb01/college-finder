@@ -1,337 +1,296 @@
+<!-- FULL UPGRADED VERSION WITH REAL-TIME CHAT, BUBBLES, STATUS, DARK MODE, ADMIN PANEL, GOOGLE LOGIN, BADGE -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Campus Finder Hub — Messages</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Finder Hub</title>
+  <link rel="icon" href="my-logo.png" />
 
-<!-- Favicon (your M shield — embedded) -->
-<link rel="icon" type="image/png"
-href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA...YOUR_FULL_LOGO_BASE64...etc">
+  <style>
+    :root {
+      --bg: #f5f5f5;
+      --text: #000;
+      --card: white;
+      --header: #0055ff;
+    }
+    body.dark {
+      --bg: #121212;
+      --text: #fff;
+      --card: #1e1e1e;
+      --header: #0a84ff;
+    }
 
-<style>
-/* BASIC UI RESET */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #fafafa;
-}
+    body { margin:0; font-family:Arial; background:var(--bg); color:var(--text);}    
+    header { background:var(--header); color:white; padding:15px; text-align:center; font-size:22px; display:flex; justify-content:space-between; align-items:center; }
 
-/* TABS */
-.tab-bar {
-  display: flex;
-  background: #8B0000;
-  color: #fff;
-}
-.tab {
-  flex: 1;
-  text-align: center;
-  padding: 14px;
-  cursor: pointer;
-  font-weight: bold;
-}
-.tab.active {
-  background: #600000;
-}
+    #darkSwitch { background:white; padding:5px 12px; border-radius:8px; cursor:pointer; color:black; }
 
-.section { display: none; padding: 20px; }
-.section.active { display: block; }
+    nav { display:flex; justify-content:space-around; background:var(--card); padding:10px; border-bottom:1px solid #ddd; }
+    nav button { background:none; border:none; font-size:18px; padding:8px 12px; cursor:pointer; color:var(--text); }
+    nav button.active { color:var(--header); font-weight:bold; position:relative; }
 
-/* FLIPBOARD */
-.flipboard {
-  background: #222;
-  color: #0f0;
-  padding: 20px;
-  font-size: 20px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-}
+    /* Notification Badge */
+    .badge { position:absolute; top:0; right:-3px; background:red; color:white; font-size:12px; padding:2px 6px; border-radius:50%; }
 
-/* MESSAGES */
-.msg-box {
-  background: #fff;
-  border-radius: 10px;
-  padding: 10px;
-  margin: 10px 0;
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  border-left: 5px solid #8B0000;
-}
-.msg-admin { border-left-color: gold; }
+    .tab{ display:none; padding:20px; }
+    .show{ display:block; }
 
-.dp {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background: #ccc;
-  object-fit: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-}
+    /* Flip Cards */
+    .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; }
+    .card{ perspective:1000px; }
+    .inner{ position:relative; width:100%; height:180px; transition:0.7s; transform-style:preserve-3d; cursor:pointer; }
+    .card:hover .inner{ transform:rotateY(180deg); }
+    .front,.back{
+      position:absolute;width:100%;height:100%;backface-visibility:hidden;
+      display:flex;align-items:center;justify-content:center;border-radius:12px;
+      font-size:20px;padding:10px;color:white;
+    }
+    .front{background:#0077ff;}
+    .back{background:#222;transform:rotateY(180deg);flex-direction:column;}
+    .back a{ background:white;color:black;padding:6px 12px;border-radius:6px;text-decoration:none;margin-top:10px; }
 
-/* PROFILE */
-.profile-card {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 10px;
-}
+    /* Login */
+    #loginBox{ max-width:350px;margin:40px auto;background:var(--card);padding:20px;border-radius:12px;box-shadow:0 0 10px rgba(0,0,0,.1);}    
+    input{ width:100%;padding:10px;margin:8px 0; }
 
-/* LOGIN BOX */
-#loginBox {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.8);
-  display: flex; justify-content: center; align-items: center;
-}
-.login-inner {
-  background: #fff; padding: 20px; width: 300px;
-  border-radius: 10px; text-align: center;
-}
-</style>
+    /* Chat */
+    #chatBox{ height:300px; overflow-y:auto; background:var(--card); padding:10px; border-radius:12px; }
+    .bubble{ padding:10px 14px; margin:10px; max-width:70%; border-radius:18px; }
+    .me{ background:#0055ff; color:white; margin-left:auto; }
+    .other{ background:#999; color:white; margin-right:auto; }
+    #typing{ font-size:14px; color:gray; }
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-messaging-compat.js"></script>
+    /* Floating Chat Button */
+    #floatBtn{
+      position:fixed;bottom:20px;right:20px;background:#0055ff;color:white;
+      padding:16px;border-radius:50%;cursor:pointer;font-size:24px;
+      box-shadow:0 4px 10px rgba(0,0,0,.3);
+    }
+
+    /* Admin Table */
+    table{ width:100%; background:var(--card); border-radius:12px; }
+    th{ cursor:pointer; background:#0055ff; color:white; }
+    td,th{ padding:12px; border-bottom:1px solid #ccc; }
+
+  </style>
+</head>
+<body>
+<header>
+  <span>Campus Finder Hub</span>
+  <span id="darkSwitch" onclick="toggleDark()">🌙</span>
+</header>
+
+<nav>
+  <button onclick="openTab('home')" class="active">Home</button>
+  <button onclick="openTab('messages')">Messages <span class="badge" id="msgBadge" style="display:none;">0</span></button>
+  <button onclick="openTab('profile')">Profile</button>
+</nav>
+
+<!-- LOGIN -->
+<div id="loginBox">
+  <h2>Login</h2>
+  <input id="email" type="email" placeholder="Email" />
+  <input id="password" type="password" placeholder="Password" />
+  <button onclick="login()">Login</button>
+  <button onclick="signup()">Sign Up</button><br><br>
+  <button onclick="googleLogin()">Continue With Google</button>
+</div>
+
+<!-- HOME -->
+<div id="home" class="tab show">
+  <h2>Explore Colleges</h2>
+  <div class="grid" id="cards"></div>
+</div>
+
+<!-- MESSAGES -->
+<div id="messages" class="tab">
+  <h2>Chat</h2>
+
+  <div id="onlineStatus">Status: offline</div>
+
+  <div id="chatBox"></div>
+  <div id="typing"></div>
+
+  <textarea id="msg" placeholder="Type..." oninput="sendTyping()" style="width:100%;height:60px"></textarea>
+  <button onclick="sendMessage()">Send</button>
+</div>
+
+<!-- PROFILE -->
+<div id="profile" class="tab">
+  <h2>Your Profile</h2>
+  <img id="pfp" src="" width="100" height="100" style="border-radius:50%"><br>
+  <input id="username" placeholder="Username" />
+  <input id="pic" type="file" accept="image/*" />
+  <button onclick="saveProfile()">Save Profile</button>
+
+  <h3>Users (Admin)</h3>
+  <table id="userTable">
+    <thead>
+      <tr>
+        <th onclick="sortUsers(0)">Username</th>
+        <th onclick="sortUsers(1)">Email</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="userRows"></tbody>
+  </table>
+</div>
+
+<!-- Floating Chat Icon -->
+<div id="floatBtn" onclick="openTab('messages')">💬</div>
+
+<!-- COMPAT FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
 
 <script>
-// ---------------- FIREBASE CONFIG (your same config) ----------------
+// INIT FIREBASE
 const firebaseConfig = {
   apiKey: "AIzaSyDjW_3cYR8apPFMmZqLqZh_9i2bN-1IEmY",
   authDomain: "college-finder-279aa.firebaseapp.com",
   databaseURL: "https://college-finder-279aa-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "college-finder-279aa",
   storageBucket: "college-finder-279aa.appspot.com",
-  messagingSenderId: "265575945526",
-  appId: "1:265575945526:web:4cd2ef244dc411e21bbec3"
+  messagingSenderId: "99165014172",
+  appId: "1:99165014172:web:4a45ea931a6e403b53d58e"
 };
-
 firebase.initializeApp(firebaseConfig);
+
 const auth = firebase.auth();
 const db = firebase.database();
+const storage = firebase.storage();
 const messaging = firebase.messaging();
-</script>
-</head>
 
-<body>
+// DARK MODE
+function toggleDark(){ document.body.classList.toggle("dark"); }
 
-<!-- ---------------- LOGIN POPUP ---------------- -->
-<div id="loginBox">
-  <div class="login-inner">
-    <h2>Login</h2>
-    <input id="emailInput" placeholder="Enter Email" style="width:100%;padding:10px"><br><br>
-    <button onclick="loginNow()" style="padding:10px 20px;background:#8B0000;color:#fff;border:none;border-radius:5px;">Login</button>
-  </div>
-</div>
-
-<!-- ---------------- TABS ---------------- -->
-<div class="tab-bar">
-  <div class="tab active" onclick="openTab('home')">Home</div>
-  <div class="tab" onclick="openTab('cities')">Cities</div>
-  <div class="tab" onclick="openTab('messages')">Messages</div>
-  <div class="tab" onclick="openTab('profile')">Profile</div>
-</div>
-
-<!-- ---------------- HOME ---------------- -->
-<div id="home" class="section active">
-  <div class="flipboard">🎓 Welcome to Campus Finder Hub</div>
-  <div class="flipboard">✔ Real-time Updates</div>
-  <div class="flipboard">✔ Message Support (Evening Replies)</div>
-</div>
-
-<!-- ---------------- CITIES ---------------- -->
-<div id="cities" class="section">
-  <h2>Cities</h2>
-
-  <div class="flipboard">📍 Chennai — Top Engineering / Arts Colleges</div>
-  <div class="flipboard">📍 Coimbatore — Best Placements</div>
-  <div class="flipboard">📍 Madurai — Affordable Colleges</div>
-  <div class="flipboard">📍 Trichy — Reputed Universities</div>
-  <div class="flipboard">📍 Salem — Eco-friendly Campuses</div>
-</div>
-
-<!-- ---------------- MESSAGES ---------------- -->
-<div id="messages" class="section">
-  <h2>Messages</h2>
-
-  <div id="msgList"></div>
-
-  <input id="msgInput" placeholder="Type message…" style="width:70%;padding:10px">
-  <button onclick="sendMessage()" style="padding:10px 20px;background:#8B0000;color:white;border:none;border-radius:5px;">
-    Send
-  </button>
-</div>
-
-<!-- ---------------- PROFILE ---------------- -->
-<div id="profile" class="section">
-  <h2>Your Profile</h2>
-
-  <div class="profile-card">
-    <div id="dp" class="dp" style="margin:auto;"></div>
-
-    <br>
-
-    <input type="file" id="dpUpload" accept="image/*" onchange="uploadDP()">
-
-    <p><b>Email:</b> <span id="pEmail"></span></p>
-    <p><b>Username:</b> <span id="pUser"></span></p>
-    <p><b>Joined:</b> <span id="pJoin"></span></p>
-    <p><b>Messages Sent:</b> <span id="pCount"></span></p>
-  </div>
-</div>
-
-<script>
-// ---------------- TAB SYSTEM ----------------
-function openTab(name){
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
-
-  event.target.classList.add("active");
-  document.getElementById(name).classList.add("active");
+// TABS
+function openTab(tab){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('show'));
+  document.getElementById(tab).classList.add('show');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
 }
 
-// ---------------- LOGIN SYSTEM (EMAIL ONLY) ----------------
-let currentUID = null;
-const ADMIN_EMAIL = "admin@mithun.com";
-
-// Shows username popup for new users
-async function askUsername(uid,email){
-  let username = prompt("Enter username");
-  if(!username) username = "User";
-
-  await db.ref("users/"+uid).set({
-    email: email,
-    username: username,
-    joined: new Date().toDateString(),
-    messages: 0,
-    profileUrl: "",
-  });
+// AUTH
+function login(){ auth.signInWithEmailAndPassword(email.value,password.value).then(()=>init()); }
+function signup(){ auth.createUserWithEmailAndPassword(email.value,password.value).then(()=>init()); }
+function googleLogin(){
+  var provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider).then(()=>init());
 }
 
-async function loginNow(){
-  let email = document.getElementById("emailInput").value.trim();
+auth.onAuthStateChanged(u=>{ if(u) init(); });
 
-  // Email-only login → use signInAnonymously + store mapping
-  const res = await auth.signInAnonymously();
-  const uid = res.user.uid;
-
-  currentUID = uid;
-
-  // Save user data
-  const snap = await db.ref("users/"+uid).once("value");
-
-  if(!snap.exists()){
-    // New user
-    await askUsername(uid,email);
-  }
-
-  // Remove login popup
-  document.getElementById("loginBox").style.display="none";
-
+function init(){
+  loginBox.style.display="none";
   loadProfile();
-  loadMessages();
-  getTokenAndSave();
+  loadCards();
+  loadChat();
+  trackOnline();
+  if(auth.currentUser.email=="mithun@admin.com") loadUsers();
 }
 
-// ---------------- PROFILE LOAD ----------------
-async function loadProfile(){
-  let snap = await db.ref("users/"+currentUID).once("value");
-  let u = snap.val();
+// FLIP CARDS
+const pages=[
+  {name:"Engineering - Trichy",file:"engineering-trichy.html"},
+  {name:"Engineering - Coimbatore",file:"engineering_coimbatore.html"},
+  {name:"Arts - Pondy",file:"arts_pondy.html"}
+];
 
-  document.getElementById("pEmail").innerText = u.email;
-  document.getElementById("pUser").innerText = u.username;
-  document.getElementById("pJoin").innerText = u.joined;
-  document.getElementById("pCount").innerText = u.messages || 0;
-
-  if(u.profileUrl){
-    document.getElementById("dp").style.backgroundImage = `url(${u.profileUrl})`;
-    document.getElementById("dp").style.backgroundSize = "cover";
-  } else {
-    document.getElementById("dp").innerText = u.username[0].toUpperCase();
-  }
+function loadCards(){
+  cards.innerHTML="";
+  pages.forEach(p=>{
+    cards.innerHTML+=`<div class='card'><div class='inner'><div class='front'>${p.name}</div><div class='back'>${p.name}<a href='${p.file}'>View</a></div></div></div>`;
+  })
 }
 
-// ---------------- DP UPLOAD ----------------
-function uploadDP(){
-  const file = document.getElementById("dpUpload").files[0];
-  const reader = new FileReader();
-
-  reader.onload = function(){
-    db.ref("users/"+currentUID+"/profileUrl").set(reader.result);
-    document.getElementById("dp").style.backgroundImage = `url(${reader.result})`;
-    document.getElementById("dp").innerHTML = "";
-  };
-  reader.readAsDataURL(file);
+// PROFILE
+function saveProfile(){
+  let u=auth.currentUser;
+  let uname=username.value;
+  let file=pic.files[0];
+  if(file){
+    let ref=storage.ref("pfp/"+u.uid);
+    ref.put(file).then(()=>ref.getDownloadURL().then(url=>{
+      db.ref("users/"+u.uid).update({username:uname,pfp:url,email:u.email});
+      pfp.src=url;
+    }))
+  } else db.ref("users/"+u.uid).update({username:uname,email:u.email});
 }
 
-// ---------------- SEND MESSAGE ----------------
-async function sendMessage(){
-  let text = document.getElementById("msgInput").value;
-  if(!text) return;
-
-  const userSnap = await db.ref("users/"+currentUID).once("value");
-  const user = userSnap.val();
-
-  const isAdmin = user.email === ADMIN_EMAIL;
-
-  await db.ref("messages").push({
-    uid: currentUID,
-    username: user.username,
-    email: user.email,
-    text: text,
-    time: new Date().toLocaleTimeString(),
-    admin: isAdmin,
-  });
-
-  db.ref("users/"+currentUID+"/messages").transaction(v => (v||0)+1);
-
-  document.getElementById("msgInput").value="";
+function loadProfile(){
+  let u=auth.currentUser;
+  db.ref("users/"+u.uid).once("value").then(s=>{
+    let d=s.val();
+    if(d){ username.value=d.username||""; if(d.pfp) pfp.src=d.pfp; }
+  })
 }
 
-// ---------------- LOAD MESSAGES ----------------
-db.ref("messages").on("child_added", snap=>{
-  let m = snap.val();
-
-  let div = document.createElement("div");
-  div.className = "msg-box " + (m.admin ? "msg-admin" : "");
-
-  let badge = m.admin ? "⭐ ADMIN" : "👤 USER";
-  let dp = `<div class="dp">${m.username[0].toUpperCase()}</div>`;
-
-  div.innerHTML = `
-    ${dp}
-    <div>
-      <b>${m.username}</b> <small>${badge}</small><br>
-      ${m.text}<br>
-      <small>${m.time}</small>
-    </div>
-  `;
-  document.getElementById("msgList").appendChild(div);
-});
-
-// ---------------- REAL PUSH NOTIFICATIONS ----------------
-async function getTokenAndSave(){
-  try {
-    const token = await messaging.getToken({
-      vapidKey: "YOUR_VAPID_KEY_HERE"
-    });
-
-    if(token){
-      db.ref("users/"+currentUID+"/token").set(token);
-    }
-  } catch(e){
-    console.log("Permission denied",e);
-  }
+// ADMIN USER TABLE
+function loadUsers(){
+  db.ref("users").on("value",s=>{
+    userRows.innerHTML="";
+    s.forEach(u=>{
+      let d=u.val();
+      userRows.innerHTML+=`<tr><td>${d.username||""}</td><td>${d.email||""}</td><td>${d.online?"🟢":"⚫"}</td></tr>`;
+    })
+  })
 }
 
-// Register service worker
-if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("firebase-messaging-sw.js");
+function sortUsers(col){
+  let rows=[...document.querySelectorAll('#userRows tr')];
+  rows.sort((a,b)=>a.children[col].innerText.localeCompare(b.children[col].innerText));
+  userRows.innerHTML="";
+  rows.forEach(r=>userRows.appendChild(r));
 }
+
+// ONLINE STATUS
+function trackOnline(){
+  let u=auth.currentUser;
+  db.ref("users/"+u.uid).update({online:true});
+  window.addEventListener("beforeunload",()=>{
+    db.ref("users/"+u.uid).update({online:false});
+  })
+}
+
+// CHAT REAL-TIME + BUBBLES
+function loadChat(){
+  db.ref("messages").on("value",s=>{
+    chatBox.innerHTML="";
+    let c=0;
+    s.forEach(m=>{
+      let d=m.val(); c++;
+      let me = d.uid==auth.currentUser.uid;
+      chatBox.innerHTML+=`<div class='bubble ${me?"me":"other"}'>${d.text}</div>`;
+    })
+    msgBadge.innerText=c;
+    msgBadge.style.display="inline";
+    chatBox.scrollTop=chatBox.scrollHeight;
+  })
+}
+
+function sendMessage(){
+  let u=auth.currentUser;
+  db.ref("messages").push({uid:u.uid,text:msg.value,time:Date.now()});
+  msg.value="";
+}
+
+// TYPING INDICATOR
+function sendTyping(){
+  db.ref("typing").set(auth.currentUser.email);
+  setTimeout(()=>db.ref("typing").set(""),1000);
+}
+
+db.ref("typing").on("value",s=>{
+  typing.innerText=s.val()? (s.val()+" is typing...") : "";
+})
+
 </script>
 
 </body>
