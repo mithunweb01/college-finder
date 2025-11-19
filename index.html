@@ -1,249 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Campus Finder Hub — Messages</title>
-
-<!-- Favicon (Your Embedded M Shield Logo) -->
-<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABgAAAAQACAIAAACoEwUV...YOUR_FULL_BASE64..." />
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Campus Finder Hub</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...YOUR_BASE64..."></link>
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #f5f5f5;
-    }
-    header {
-        background: #6e0b14;
-        padding: 14px;
-        color: white;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-    header img {
-        width: 38px;
-        height: 38px;
-        border-radius: 6px;
-    }
-    header h1 {
-        margin: 0;
-        font-size: 22px;
-        letter-spacing: 1px;
-    }
-
-    /* Tabs */
-    .tabs {
-        display: flex;
-        background: white;
-        border-bottom: 1px solid #ccc;
-    }
-    .tab {
-        flex: 1;
-        padding: 14px;
-        text-align: center;
-        cursor: pointer;
-        font-weight: bold;
-    }
-    .tab.active {
-        background: #6e0b14;
-        color: white;
-    }
-
-    /* Pages */
-    .page {
-        display: none;
-        padding: 20px;
-    }
-    .page.active {
-        display: block;
-    }
-
-    /* Login Box */
-    #loginBox {
-        max-width: 360px;
-        margin: 40px auto;
-        background: white;
-        border-radius: 8px;
-        padding: 24px;
-        box-shadow: 0 0 10px #0001;
-    }
-    #loginBox input {
-        width: 100%;
-        margin-bottom: 12px;
-        padding: 12px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-    }
-    #loginBox button {
-        width: 100%;
-        padding: 12px;
-        background: #6e0b14;
-        color: white;
-        font-weight: bold;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-    }
-
-    /* Message List */
-    .msg {
-        display: flex;
-        margin-bottom: 14px;
-        background: white;
-        padding: 12px;
-        border-radius: 8px;
-        align-items: flex-start;
-        gap: 12px;
-    }
-    .msg img {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-    }
-    .msg .bubble {
-        background: #eee;
-        padding: 10px 14px;
-        border-radius: 8px;
-    }
-    .badge {
-        font-size: 10px;
-        padding: 2px 6px;
-        background: #6e0b14;
-        color: white;
-        border-radius: 4px;
-    }
-
-    /* Profile Page */
-    .profile {
-        max-width: 420px;
-        margin: auto;
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px #0001;
-    }
-    .profile img {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        margin-bottom: 10px;
-    }
+/* --- BASIC RESET --- */
+body { margin:0; font-family: Arial; background:#f4f4f4; }
+header { background:#800000; color:white; padding:12px; text-align:center; font-size:22px; }
+nav { display:flex; background:white; border-bottom:1px solid #ccc; }
+nav button { flex:1; padding:14px; border:none; background:white; font-size:16px; cursor:pointer; }
+nav button.active { background:#800000; color:white; }
+section { display:none; padding:15px; }
+section.active { display:block; }
+.card { background:white; padding:15px; margin:10px 0; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.15); }
+.city-title { font-size:20px; font-weight:bold; color:#800000; }
+.flip { background:#fff; border-radius:10px; padding:10px; margin:10px 0; box-shadow:0 2px 4px rgba(0,0,0,0.1); }
+/* --- MESSAGE AREA --- */
+#messagesBox { height:300px; overflow-y:auto; background:white; padding:10px; border-radius:8px; }
+.msg { display:flex; margin:10px 0; }
+.msg img { width:40px; height:40px; border-radius:50%; margin-right:10px; }
+.msg .bubble { background:#eee; padding:10px; border-radius:8px; max-width:70%; }
+.msg.admin .bubble { background:#ffe6e6; border-left:4px solid #800000; }
+.time { font-size:11px; color:#555; margin-top:3px; }
+/* PROFILE */
+#profilePhoto { width:90px; height:90px; border-radius:50%; border:3px solid #800000; }
 </style>
 </head>
 <body>
+<header>Campus Finder Hub</header>
 
-<header>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABgAAAAQACAIAAACoEwUV...YOUR_FULL_BASE64..." />
-    <h1>Campus Finder Hub</h1>
-</header>
+<nav>
+<button onclick="openTab('home')" class="active">Home</button>
+<button onclick="openTab('cities')">Cities</button>
+<button onclick="openTab('messages')">Messages</button>
+<button onclick="openTab('profile')">Profile</button>
+</nav>
 
-<div id="loginBox">
-    <h2>Login / Signup</h2>
-    <input id="email" type="text" placeholder="Email" />
-    <input id="pass" type="password" placeholder="Password" />
-    <button onclick="login()">Continue</button>
-</div>
+<!-- HOME TAB -->
+<section id="home" class="active">
+<h2>Welcome to Campus Finder Hub</h2>
+<div class="flip">Accurate College Data</div>
+<div class="flip">Tamil Nadu + All India</div>
+<div class="flip">Message System Support</div>
+</section>
 
-<div id="main" style="display:none;">
+<!-- CITIES TAB -->
+<section id="cities">
+<h2>Cities</h2>
+<div class="card"><div class="city-title">Chennai</div>Chennai colleges info here.</div>
+<div class="card"><div class="city-title">Coimbatore</div>Coimbatore colleges info here.</div>
+<div class="card"><div class="city-title">Madurai</div>Madurai colleges info here.</div>
+</section>
 
-    <!-- TABS -->
-    <div class="tabs">
-        <div class="tab active" onclick="switchTab('messages')">Messages</div>
-        <div class="tab" onclick="switchTab('profile')">Profile</div>
-    </div>
+<!-- MESSAGES TAB -->
+<section id="messages">
+<h2>Messages</h2>
+<div id="messagesBox"></div>
+<br>
+<input id="msgInput" placeholder="Type message" style="width:80%;padding:10px;">
+<button onclick="sendMessage()" style="padding:10px;background:#800000;color:white;border:none;">Send</button>
+</section>
 
-    <!-- PAGES -->
+<!-- PROFILE TAB -->
+<section id="profile">
+<h2>Your Profile</h2>
+<img id="profilePhoto" src="" />
+<br><br>
+<input type="file" id="photoUpload" accept="image/*">
+<div id="profileName"></div>
+<div id="profileEmail"></div>
+</section>
 
-    <div id="messages" class="page active">
-        <h2>Your Conversations</h2>
-        <div id="msgList"></div>
-    </div>
-
-    <div id="profile" class="page">
-        <div class="profile">
-            <img id="pfp" src="" />
-            <br />
-            <strong id="pName"></strong><br />
-            <small id="pEmail"></small><br />
-            <small id="pJoined"></small><br />
-            <small id="pCount"></small>
-            <hr />
-            <input type="file" id="upload" accept="image/*" onchange="uploadPFP(this)" />
-        </div>
-    </div>
-</div>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-messaging-compat.js"></script>
 
 <script>
-let USER = null;
-let adminEmail = "mithun@admin.com";
-let LOGO = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABgAAAAQACAIAAACoEwUV...YOUR_FULL_BASE64...";
+// FIREBASE CONFIG
+const firebaseConfig = {
+apiKey:"AIzaSyDjW_3cYR8apPFMmZqLqZh_9i2bN-1IEmY",
+authDomain:"college-finder-279aa.firebaseapp.com",
+databaseURL:"https://college-finder-279aa-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"college-finder-279aa",
+storageBucket:"college-finder-279aa.appspot.com",
+messagingSenderId:"94401695690",
+appId:"1:94401695690:web:380de91d4f168ea2944933"
+};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
+const db=firebase.database();
+const messaging=firebase.messaging();
 
-function login(){
-    let email = document.getElementById('email').value;
-    if(!email){ alert("Enter email"); return; }
-    USER = {
-        email,
-        name: email.split('@')[0],
-        joined: new Date().toLocaleDateString(),
-        messages: 4,
-        photo: LOGO
-    };
+// TABS
+function openTab(tab){ document.querySelectorAll("section").forEach(s=>s.classList.remove("active")); document.getElementById(tab).classList.add("active"); document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active")); }
 
-    document.getElementById('loginBox').style.display = 'none';
-    document.getElementById('main').style.display = 'block';
+// SIMPLE AUTO LOGIN
+auth.signInAnonymously().then(()=>{
+console.log("Logged in anonymous");
+});
 
-    loadProfile();
-    loadMessages();
-}
+function sendMessage(){ let text=document.getElementById("msgInput").value.trim(); if(!text) return; db.ref("messages").push({text, time:Date.now()}); document.getElementById("msgInput").value=""; }
 
-function switchTab(id){
-    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    event.target.classList.add('active');
-    document.getElementById(id).classList.add('active');
-}
+db.ref("messages").on("child_added",snap=>{
+let d=snap.val();
+let box=document.getElementById("messagesBox");
+let div=document.createElement("div"); div.className="msg";
+div.innerHTML=`<img src="https://via.placeholder.com/40"/><div><div class='bubble'>${d.text}</div><div class='time'>${new Date(d.time).toLocaleTimeString()}</div></div>`;
+box.appendChild(div);
+box.scrollTop=box.scrollHeight;
+});
 
-function loadProfile(){
-    document.getElementById('pfp').src = USER.photo;
-    document.getElementById('pName').textContent = USER.name;
-    document.getElementById('pEmail').textContent = USER.email;
-    document.getElementById('pJoined').textContent = "Joined: " + USER.joined;
-    document.getElementById('pCount').textContent = "Messages: " + USER.messages;
-}
-
-function loadMessages(){
-    let box = document.getElementById('msgList');
-
-    box.innerHTML = `
-        <div class='msg'>
-            <img src='${LOGO}' />
-            <div>
-                <div><span class='badge'>ADMIN</span> Hello! How can I help?</div>
-                <small>Just now</small>
-            </div>
-        </div>
-        <div class='msg'>
-            <img src='${USER.photo}' />
-            <div>
-                <div><span class='badge' style='background:#555'>YOU</span> I need help finding a college.</div>
-                <small>Just now</small>
-            </div>
-        </div>
-    `;
-}
-
-function uploadPFP(input){
-    const file = input.files[0];
-    const reader = new FileReader();
-    reader.onload = e => {
-        USER.photo = e.target.result;
-        loadProfile();
-        loadMessages();
-    };
-    reader.readAsDataURL(file);
-}
+// SERVICE WORKER
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('firebase-messaging-sw.js'); }
 </script>
+
 </body>
 </html>
